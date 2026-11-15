@@ -30,8 +30,8 @@ export function useCountUp(value, duration = 650, fromZero = false) {
   return display
 }
 
-export function AnimatedNumber({ value, decimals = 0, fromZero = false, className, style }) {
-  const v = useCountUp(value, 650, fromZero)
+export function AnimatedNumber({ value, decimals = 0, fromZero = false, duration = 650, className, style }) {
+  const v = useCountUp(value, duration, fromZero)
   return <span className={className} style={style}>{v.toFixed(decimals)}</span>
 }
 
@@ -66,7 +66,11 @@ export function LineChart({ points, color = '#2dd4bf', height = 180, label = '' 
 }
 
 export function Gauge({ value, color }) {
-  const v = useCountUp(value)
+  /* ALWAYS counts up from 0 on mount (fromZero) — so the gauge visibly
+     SWEEPS every time the page loads, and every time the parent remounts
+     it with a new key (e.g. after a data refresh). On plain value changes
+     it glides from the current value instead. */
+  const v = useCountUp(value, 900, true)
   const r = 78, c = 2 * Math.PI * r, frac = Math.max(0, Math.min(1, v / 100))
   return (
     <div style={{ position: 'relative', width: 190, height: 190, margin: '0 auto' }}>

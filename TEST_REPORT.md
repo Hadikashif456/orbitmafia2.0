@@ -223,3 +223,74 @@ on :5173, which proxies `/api` to the live uvicorn backend on :8000).
   prove the render, the interactions and the perf structure; the feel of the
   scroll on a real phone is the last check).
 - Render + Vercel deployment (no accounts in this session).
+
+## Motion round 2 — UNMISSABLE motion, 2026-11-15 ~11:50 PKT
+
+Why: Hadi said the site "is still the same, it didn't even change" — the
+motion from the last round existed in code but was too subtle to see
+(22px rises, a 90s orbit spin, marquee below the fold), and his running
+dev server can also show stale files. This round makes motion impossible
+to miss on first load, with no scrolling needed.
+
+First load (Landing, no scrolling needed):
+- Headline lines slide up out of masks one by one (`.hero-line`,
+  `heroLineUp`, 1.05s each, delays .05/.22/.4s) — the whole first paint
+  finishes moving in ~1.5s.
+- Big glowing orbit sigil: 3 rings spinning at visibly different speeds
+  (22s / 32s / 46s) with glowing dots riding the rings + pulsing core +
+  gentle bob. The old 90s ring was replaced — you can SEE this one turn.
+- Gradient headline shimmers lilac ↔ teal (two layers cross-fading by
+  opacity only — no background-position repainting).
+- Hero stats count up from 0 (252 labs, 9 analytes, 4 crew).
+- Marquee strip faster (22s) and larger; LIVE pill has an expanding
+  pulse ring around it.
+
+On scroll (Cyera-style):
+- Reveals now rise 52px + scale .965 → 1, 0.9s, staggered grids
+  (was 22px / 0.7s — nearly invisible). One IntersectionObserver.
+- New scroll-progress hairline at the very top (lilac→teal), driven by a
+  CSS scroll-timeline — no JS scroll listener at all.
+- Section headers on the Dashboard slide in via Reveal.
+
+Dashboard motion proof:
+- Worst-crew CRI gauge sweeps up from zero on every load and again on
+  every Refresh (keyed remount); KPI numbers count up from zero on load.
+- Replay: slider animates the big CRI number (900ms tween).
+
+Render verification — new harness `/tmp/om2-test/motion.cjs` (jsdom + real
+Vite dev proxy + real backend), with a controllable IntersectionObserver
+mock and the real stylesheet injected so computed styles resolve:
+- `#/home`: 3 hero lines, animation `computed:heroLineUp`; sigil 3 rings /
+  3 dots / 1 core, `computed:sigilSpin`, `sigilSpinRev`, `pulseCore`;
+  gradient layers a+b, `computed:gradFade`; marquee `computed:marquee`;
+  LIVE pill `status-pill live-pulse`, text "LIVE · 252 LABS · 32 DAILY";
+  hero stats reach 252 / 9 / 4; reveals 0 `.in` before scroll, 2 `.in`
+  after the observer fires; ERRORS [].
+- `#/dashboard`: LIVE pill, gauge SVG present, KPI lowest CRI present,
+  reveals 0 before scroll → 6 after; ERRORS [].
+- `#/replay`: slider to 144 → CRI **47.9** + "Sol 144"; ERRORS [].
+- `#/checkin`: sleep slider to 4h → CRI **80.3**, "Biggest drag right
+  now: Sleep −18.0 pts"; ERRORS [].
+- `#/live`: after 5s tick **3**, showing **Sol 143**; ERRORS [].
+- `#/alerts`: lab banner + all 3 alert titles; ERRORS [].
+- Perf audit `/tmp/om2-test/perf-audit.cjs`: **ALL PERF CHECKS PASSED** —
+  17/17 keyframes transform/opacity only, infinite animations all
+  transform/opacity only, 0 filter:blur, 0 backdrop-filter, 0
+  background-attachment:fixed, 0 scroll listeners.
+- NOTE on the harness itself: the first bundle build used a bad esbuild
+  `--define` (CLI quoting made BASE the literal characters `""`, so every
+  API fetch hit the SPA fallback and returned HTML). Fixed with
+  `/tmp/om2-test/build-bundle.cjs` (JS API define, verified
+  `var BASE = "";` in the bundle) — the app code was never at fault.
+  The old harness's `HAS_CREW ['ORBIT']` line was a false positive
+  ("ORBIT" is in the topbar logo); the motion harness checks real data.
+- `cd backend && .venv/bin/python -m pytest test_app.py -q` → **11 passed**.
+- `cd frontend && npm run build` → success, CSS 15.12 kB, JS 198.69 kB
+  (61.49 kB gzip). No new dependencies.
+
+Still not verified live (needs Hadi): real-browser/phone look at the hero
+and the scroll — the jsdom harness proves the animations are attached and
+running, but the feel on his phone is the last check. To SEE the new
+motion he MUST: `git pull`, STOP the running frontend dev server,
+`npm run dev` again, Ctrl+F5 hard refresh — a running dev server keeps
+serving the old files until it is restarted.

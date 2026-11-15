@@ -112,7 +112,7 @@ function HealthStatus() {
   }, [])
   if (!s) return <span className="status-pill"><span className="status-dot" style={{ background: '#7d6a92', boxShadow: 'none', animation: 'none' }} />CHECKING…</span>
   return s.live
-    ? <span className="status-pill" style={{ color: '#34d399', borderColor: 'rgba(52,211,153,.5)' }} title={s.at ? 'Last checked ' + s.at.toLocaleTimeString('en-GB') : ''}><span className="status-dot" />LIVE · {s.bio} LABS · {s.daily} DAILY</span>
+    ? <span className="status-pill live-pulse" style={{ color: '#34d399', borderColor: 'rgba(52,211,153,.5)' }} title={s.at ? 'Last checked ' + s.at.toLocaleTimeString('en-GB') : ''}><span className="status-dot" />LIVE · {s.bio} LABS · {s.daily} DAILY</span>
     : <span className="status-pill" style={{ color: '#f87171', borderColor: 'rgba(248,113,113,.5)' }}><span className="status-dot off" />OFFLINE</span>
 }
 
@@ -161,9 +161,9 @@ function Home() {
   const labs = useApi('/api/v1/labs/summary')
   const counts = labs.data ? labs.data.counts : null
   return (<>
-    <header className="hero"><div className="orbit" /><div className="orbit-ring2" /><div className="orbit-core" /><div className="glow-orb a" /><div className="glow-orb b" /><div className="wrap">
+    <header className="hero"><div className="hero-sigil" aria-hidden="true"><div className="sigil-ring r1"><span className="sigil-dot" /></div><div className="sigil-ring r2"><span className="sigil-dot teal" /></div><div className="sigil-ring r3"><span className="sigil-dot small" /></div><div className="sigil-core" /></div><div className="glow-orb a" /><div className="glow-orb b" /><div className="wrap">
       <p className="eyebrow anim-in" style={{ '--d': '0s' }}>NASA Space Apps Challenge 2026 · Challenge #5</p>
-      <h1><span className="anim-in" style={{ '--d': '.08s', display: 'block' }}>Your crew's health,</span><span className="anim-in" style={{ '--d': '.18s', display: 'block' }}>twelve minutes</span><span className="anim-in" style={{ '--d': '.28s', display: 'block' }}>from <em className="grad-text">Earth.</em></span></h1>
+      <h1><span className="hero-line" style={{ '--d': '.05s' }}><span>Your crew's health,</span></span><span className="hero-line" style={{ '--d': '.22s' }}><span>twelve minutes</span></span><span className="hero-line" style={{ '--d': '.4s' }}><span>from <em className="grad-text"><span className="grad-a">Earth.</span><span className="grad-b" aria-hidden="true">Earth.</span></em></span></span></h1>
       <p className="lede anim-in" style={{ '--d': '.38s' }}>Orbit Mafia 2.0 watches four astronauts on a Mars transit with real NASA blood data,
         one honest resilience score, and a plan for what to do next — before Earth can even answer.</p>
       <div className="anim-in" style={{ '--d': '.5s', display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -225,12 +225,12 @@ function Dashboard() {
     <RefreshBar updatedAt={updatedAt} onRefresh={refresh} refreshing={refreshing} />
     <DelayBanner />
     <Reveal><div className="grid g4">
-      <div className="card kpi"><span>Lowest CRI</span><b style={{ color: BAND_COLOR[worst.cri_band] }}><AnimatedNumber value={worst.cri} decimals={1} /></b><span>{worst.callsign} · {worst.cri_band}</span></div>
-      <div className="card kpi"><span>Crew average CRI</span><b><AnimatedNumber value={avg} decimals={1} /></b><span>Sol 147</span></div>
+      <div className="card kpi"><span>Lowest CRI</span><b style={{ color: BAND_COLOR[worst.cri_band] }}><AnimatedNumber value={worst.cri} decimals={1} fromZero /></b><span>{worst.callsign} · {worst.cri_band}</span></div>
+      <div className="card kpi"><span>Crew average CRI</span><b><AnimatedNumber value={avg} decimals={1} fromZero /></b><span>Sol 147</span></div>
       <div className="card kpi"><span>Open alerts</span><b>{sum.data ? <AnimatedNumber value={sum.data.total_alerts} fromZero /> : '…'}</b><span>Across all crew</span></div>
       <div className="card kpi"><span>Real lab rows</span><b>{deps.data ? <AnimatedNumber value={deps.data.counts.biomarkers} fromZero /> : '…'}</b><span>OSD-575 · HDCVD9</span></div>
     </div></Reveal>
-    <h2 style={{ margin: '32px 0 12px' }}>Real NASA lab evidence — OSD-575 <span className="real-badge">Real NASA OSD-575</span></h2>
+    <Reveal><h2 style={{ margin: '32px 0 12px' }}>Real NASA lab evidence — OSD-575 <span className="real-badge">Real NASA OSD-575</span></h2></Reveal>
     {labs.data ? <div className="card">
       <p className="small muted" style={{ marginTop: 0 }}>CRP change from 3 days before landing (L-3) to the day after (R+1) — straight from the real OSD-575 blood panel, served by the API. No typed-in numbers.</p>
       <div className="crp-strip">
@@ -247,7 +247,17 @@ function Dashboard() {
       </div>
       <p className="small muted">C002 is the warning: 8 of 9 immune markers fell over 50% at R+1. That real lab crash is what the Sol 144 CRI dip in Mission Replay is anchored to.</p>
     </div> : <p className="muted small">Loading lab evidence…</p>}
-    <h2 style={{ margin: '32px 0 12px' }}>Crew resilience — Sol 147</h2>
+    <Reveal><h2 style={{ margin: '32px 0 12px' }}>Crew resilience — Sol 147</h2></Reveal>
+    {/* Motion proof: the worst crew member's gauge SWEEPS up from zero on every
+        page load and again on every Refresh (the key remounts it). If the gauge
+        moves, the backend is live and the numbers are fresh. */}
+    <Reveal><div className="card" style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap', marginBottom: 16 }}>
+      <Gauge key={updatedAt ? updatedAt.getTime() : 'init'} value={worst.cri} color={BAND_COLOR[worst.cri_band]} />
+      <div style={{ flex: '1 1 260px' }}>
+        <b>{worst.callsign} — lowest CRI in the crew</b>
+        <p className="small muted" style={{ margin: '6px 0 0' }}>The gauge sweeps up from zero every time this page loads — and again every time you press Refresh. CRI <AnimatedNumber value={worst.cri} decimals={1} /> · {worst.cri_band} · Sol 147. If the gauge moves, the data is live.</p>
+      </div>
+    </div></Reveal>
     <Reveal><div className="card">
       {crew.map(c => <HBar key={c.id} label={`${c.callsign} (${c.id}) — ${c.role}`} value={c.cri} max={100} color={c.color} />)}
       <p className="small muted">CRI out of 100. Open a crew member for the full 8-Sol trend chart.</p>
@@ -264,7 +274,7 @@ function Dashboard() {
         ))}
       </div>
     </div></Reveal>
-    <h2 style={{ margin: '32px 0 12px' }}>What needs attention</h2>
+    <Reveal><h2 style={{ margin: '32px 0 12px' }}>What needs attention</h2></Reveal>
     <CrewAlertsQuick crew={crew} />
   </section></div>)
 }
@@ -340,7 +350,7 @@ function Detail({ id }) {
     <p className="muted">{data.notes}</p>
     <div className="grid g3" style={{ marginTop: 18 }}>
       <div className="card" style={{ textAlign: 'center' }}>
-        <Gauge value={data.cri} color={BAND_COLOR[data.cri_band]} />
+        <Gauge key={updatedAt ? updatedAt.getTime() : 'init'} value={data.cri} color={BAND_COLOR[data.cri_band]} />
         <p className="small muted">Crew Resilience Index · Sol {l.sol}. Formula is published on the Drivers page.</p>
       </div>
       <div className="card">
@@ -429,7 +439,7 @@ function Replay() {
     </div>
     {c002 && <div className="card" style={{ marginTop: 16, borderColor: 'rgba(251,191,36,.4)', display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap' }}>
       <div><span className="small muted">ORBIT · C002 — CRI on Sol {sol}</span>
-        <div style={{ fontSize: 52, fontFamily: "'Space Grotesk'", lineHeight: 1, color: BAND_COLOR[c002Band] }}><AnimatedNumber value={c002.cri} decimals={1} /></div>
+        <div style={{ fontSize: 52, fontFamily: "'Space Grotesk'", lineHeight: 1, color: BAND_COLOR[c002Band] }}><AnimatedNumber value={c002.cri} decimals={1} duration={900} /></div>
       </div>
       <Badge band={c002Band} />
       <p className="small muted" style={{ margin: 0, flex: '1 1 220px' }}>Drag the slider and watch this number move: Sol 140 <b style={{ color: '#e8ecf4' }}>79.8</b> → Sol 142 <b style={{ color: '#e8ecf4' }}>61.7</b> → Sol 144 <b style={{ color: '#e8ecf4' }}>47.9</b> → Sol 147 <b style={{ color: '#e8ecf4' }}>79.8</b>. Every value comes from the replay API — nothing here is typed in.</p>
@@ -749,6 +759,7 @@ function App() {
   const h = useHash()
   const [route, param] = h.split('/')
   return (<>
+    <div className="scroll-progress" aria-hidden="true" />
     <div className="topbar"><div className="wrap topbar-inner">
       <a className="logo" href="#/home" style={{ textDecoration: 'none' }}>ORBIT <b>MAFIA</b> <span className="mono" style={{ color: '#6b7488', fontSize: 12 }}>2.0</span></a>
       <nav className="nav">{NAV.map(([r, label]) => (
