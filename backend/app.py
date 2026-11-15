@@ -215,6 +215,31 @@ def summary():
                      "daily_vitals": "Synthetic, labelled (32 rows, Sol 140-147 x 4 crew)"}}
 
 
+@app.get("/api/v1/labs/summary")
+def labs_summary():
+    """Real NASA OSD-575 lab evidence in one call.
+
+    Per crew: the verified CRP change L-3 -> R+1 and how many of the 9
+    immune markers fell over 50% at R+1. Counts come from the database,
+    so the frontend never hardcodes them.
+    """
+    con = db()
+    totals = {"biomarkers": con.execute("SELECT COUNT(*) c FROM biomarkers").fetchone()["c"],
+              "samples": con.execute("SELECT COUNT(DISTINCT sample_id) c FROM biomarkers").fetchone()["c"],
+              "analytes": con.execute("SELECT COUNT(DISTINCT analyte) c FROM biomarkers").fetchone()["c"],
+              "crew": con.execute("SELECT COUNT(DISTINCT crew_id) c FROM biomarkers").fetchone()["c"]}
+    con.close()
+    per_crew = {}
+    for cid in CREW:
+        changes = biomarker_changes(cid)
+        crp = next((c for c in changes if c["analyte"] == "CRP"), None)
+        falls = [c for c in changes if c["pct_change"] is not None and c["pct_change"] <= -50]
+        per_crew[cid] = {"crp": crp, "markers_fell_over_50pct": len(falls),
+                         "total_markers": len(changes)}
+    return {"source": "NASA Open Science Data Repository, OSD-575, Version 3, HDCVD9 panel (real data)",
+            "counts": totals, "per_crew": per_crew}
+
+
 @app.get("/api/v1/radiation")
 def radiation():
     con = db()

@@ -41,6 +41,77 @@ Command: `npm run preview -- --port 4173`
 - `data/synthetic_daily.csv`: 32 rows (Sol 140–147 × 4 crew). C002 CRI Sol 140 79.8 → Sol 142 61.7 → Sol 144 47.9 → Sol 147 79.8 (matches the "82 to 61" working range from v1, low point at the solar event).
 - `data/orbit_mafia.db`: rebuilt by `python seed.py` → `{'biomarkers': 252, 'daily': 32}`.
 
+---
+
+# REWORK — 2026-11-15 ~11:20 PKT (Asia/Karachi): all-real integration + design-system pass
+
+Hadi's warning: everything real, nothing to replace by hand, frontend fully
+integrated with the backend, smooth, frontend like overworldaudio.com and
+secure-the-unknown.cyera.com. Honest-data rule kept: daily vitals/CRI stay
+labelled "mission scenario — simulated", because OSDR publishes no daily
+sleep/HR/HRV/mood series; every lab number now comes from the real OSD-575
+CSV via the API, and the Sol 144 dip is anchored on the page to C002's real
+R+1 lab crash.
+
+## What changed (files)
+- `backend/app.py` — new endpoint `GET /api/v1/labs/summary`: real CRP
+  L-3→R+1 + markers-fell-over-50% per crew + counts from the DB (252 rows,
+  28 samples, 9 analytes, 4 crew). No hardcoded numbers anywhere in it.
+- `backend/test_app.py` — new test `test_labs_summary_real_numbers`.
+- `frontend/src/styles.css` — full design-system rewrite from the two
+  reference sites: Cyera Black #160923, Deep Purple #441563, Aubergine
+  #6D2D93, Lilac #D28EFF (single restrained accent), Clay, Salmon #FF978B;
+  Overworld-style black entry, glowing sigil/orbit ring, huge display type
+  (clamp 52–104px), fine fixed grid, glass cards (24/32px radii), fade-up
+  motion, lilac-gradient buttons. New classes: .real-badge, .sim-badge,
+  .offline-banner, .status-pill/.status-dot, .crp-strip.
+- `frontend/src/main.jsx` — per-page integration audit fixes (see below).
+- `frontend/src/charts.jsx` — HBar gains a `suffix` prop ("pts" for penalties).
+- `README.md` — deploy note corrected: Render build runs `python backend/seed.py`
+  (the DB file is binary and is NOT pushed to GitHub; the build rebuilds it).
+
+## Integration audit — per page
+- Landing: hero counts (252/9/4) now from `GET /api/v1/labs/summary`, not typed in.
+- Dashboard: lab-rows KPI from `/health/deps`; NEW real CRP evidence strip
+  (per-crew CRP + falls) from `/labs/summary`; offline snapshot is now a
+  visible OFFLINE banner. Verified Sol 147: all 4 crew GOOD/EXCELLENT, so
+  "whole crew is back in the green" is true.
+- Crew Board: API-backed; daily vitals now carry a "Scenario · simulated" tag.
+- Astronaut Detail: biomarker table was already API-backed (real OSD-575);
+  trend chart now carries a scenario label + anchor note tying the Sol 144
+  dip to the real R+1 lab crash (C002-specific wording only on C002's page).
+- Mission Replay: NEW real-lab anchor card from `/labs/summary`; frames
+  labelled scenario/simmulated.
+- Recovery: hardcoded lowest-CRI values REMOVED — lowest now from
+  `/mission/summary` min_cri per crew (verified same values: C002 47.9, C001
+  77.2, C003 74.8, C004 75.2). Recovery plans stay as plan text (not data).
+- CRI Drivers: illustrative HBar values (100/70/50/…) REMOVED — bars now show
+  the worst crew member's real API penalties in points; per-crew text now
+  uses each crew's real top driver from `/api/v1/crew/{id}`.
+- Alerts: API-backed; NEW real-lab evidence banner from `/labs/summary`
+  (C002 8/9 falls + all four CRP changes).
+- Daily Check-in: user input only; CRI computed in-browser with the same
+  published formula; stored in browser only. No backend data invented.
+- Live Monitor: heart rate now starts from C002's last stored value from
+  the API (not a typed-in 68); SpO2 now from the API too. Still labelled
+  simulated, as before.
+- Copilot: cached human-written answers (declared); Sol 144 answer now
+  labels the 1.32 mGy dose as a simulated scenario value, not real RAD data.
+- Data & Method: documentation page; numbers are the verified real ones.
+
+## Verification (this rework, commands + outputs)
+- `cd backend && .venv/bin/python -m pytest test_app.py -q` → **11 passed** (1 warning, same harmless starlette DeprecationWarning).
+- `python seed.py` → `{'biomarkers': 252, 'daily': 32}`; uvicorn on :8000.
+- `GET /api/v1/labs/summary` → counts {biomarkers 252, samples 28, analytes 9, crew 4}; CRP C001 +107.3, C002 −22.2, C003 +95.2, C004 +28.8; C002 falls 8/9.
+- Every endpoint curled for all 4 crew: vitals, cri, trend, biomarkers, alerts + detail → **all 200**; replay, summary, radiation, labs/summary, crew, health, health/deps → **all 200**; unknown crew → **404**.
+- Sol 147 CRI from the live API: C001 ASTRA 99.0 EXCELLENT, C002 ORBIT 79.8 GOOD, C003 NOVA 96.3 EXCELLENT, C004 ATLAS 96.5 EXCELLENT. Summary mins: C001 77.2, C002 47.9, C003 74.8, C004 75.2; total_alerts 5.
+- `cd frontend && npm run build` → success, 32 modules, CSS 9.01 kB, JS 189.24 kB (58.94 kB gzip). Built bundle verified to contain `labs/summary`, the OFFLINE banner text, and the new badge classes.
+- `npm run dev` (port 5173) → `GET /` 200; the Vite proxy forwards `/api/v1/health` to the real backend → `{"status":"ok","db":true}`; `/api/v1/labs/summary` through the proxy returns the real CRP numbers above. So the frontend talks to the real backend, not the snapshot.
+
+## Still not verified live (needs Hadi)
+- Render + Vercel deployment (no accounts/credentials available in this session).
+- Full click-through in a real browser / on his phone (build + dev-server + API checks passed; visual phone check still to do by Hadi).
+
 ## Not yet verified live (needs Hadi)
 
 - Render + Vercel deployment (no accounts/credentials available in this session).

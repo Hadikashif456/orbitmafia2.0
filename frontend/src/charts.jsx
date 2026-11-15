@@ -45,11 +45,11 @@ export function Gauge({ value, color }) {
   )
 }
 
-export function HBar({ label, value, max, color }) {
+export function HBar({ label, value, max, color, suffix = '%' }) {
   return (
     <div style={{ marginBottom: 10 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 4 }}>
-        <span>{label}</span><span className="mono">{value}%</span>
+        <span>{label}</span><span className="mono">{value}{suffix}</span>
       </div>
       <div style={{ height: 8, background: '#1c2436', borderRadius: 99, overflow: 'hidden' }}>
         <div style={{ width: `${Math.min(100, Math.abs(value) / max * 100)}%`, height: '100%', background: color, borderRadius: 99 }} />

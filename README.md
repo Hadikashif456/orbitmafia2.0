@@ -107,7 +107,7 @@ Provenance note: the per-analyte sample values reproduce the OSD-575 structure (
 
 ## Deploy
 
-**Backend first — Render (free):** `render.yaml` is in the repo. Create a Web Service from this repo, Render reads `render.yaml` (build `pip install -r backend/requirements.txt`, start `uvicorn app:app --host 0.0.0.0 --port $PORT --app-dir backend`, root `data/` is committed so no DB step is needed). Note the `DB_PATH` env var in `render.yaml` — it points at the committed DB.
+**Backend first — Render (free):** `render.yaml` is in the repo. Create a Web Service from this repo, Render reads `render.yaml` (build `pip install -r backend/requirements.txt && python backend/seed.py` — the build rebuilds the SQLite database from the CSVs in `data/`, so no database file needs to be pushed or created by hand; start `uvicorn app:app --host 0.0.0.0 --port $PORT --app-dir backend`). Note the `DB_PATH` env var in `render.yaml` — it points at the database the build creates.
 
 **Frontend second — Vercel:** `vercel.json` is in the repo. Import the repo, set Root Directory to `frontend`, and set env var `VITE_API_BASE_URL` to your Render URL (e.g. `https://orbit-mafia-2.onrender.com`). Then deploy. No other env vars.
 

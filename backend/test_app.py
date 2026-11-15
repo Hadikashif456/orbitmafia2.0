@@ -79,6 +79,19 @@ def test_alerts_have_why_action_escalation():
         assert a["why"] and a["actions"] and a["escalation"] and a["level"] in ("WATCH", "ACT", "URGENT")
 
 
+def test_labs_summary_real_numbers():
+    r = client.get("/api/v1/labs/summary")
+    assert r.status_code == 200
+    j = r.json()
+    assert j["counts"] == {"biomarkers": 252, "samples": 28, "analytes": 9, "crew": 4}
+    assert j["per_crew"]["C001"]["crp"]["pct_change"] == 107.3
+    assert j["per_crew"]["C003"]["crp"]["pct_change"] == 95.2
+    assert j["per_crew"]["C002"]["crp"]["pct_change"] == -22.2
+    assert j["per_crew"]["C004"]["crp"]["pct_change"] == 28.8
+    assert j["per_crew"]["C002"]["markers_fell_over_50pct"] == 8
+    assert j["per_crew"]["C002"]["total_markers"] == 9
+
+
 def test_replay_frames():
     r = client.get("/api/v1/mission/replay")
     j = r.json()
