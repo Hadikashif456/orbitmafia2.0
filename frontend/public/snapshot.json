@@ -1048,6 +1048,71 @@
    }
   ]
  },
+ "/api/v1/labs/summary": {
+  "source": "NASA Open Science Data Repository, OSD-575, Version 3, HDCVD9 panel (real data)",
+  "counts": {
+   "biomarkers": 252,
+   "samples": 28,
+   "analytes": 9,
+   "crew": 4
+  },
+  "per_crew": {
+   "C001": {
+    "crp": {
+     "analyte": "CRP",
+     "unit": "mg/L",
+     "l3_value": 2.0,
+     "r1_value": 4.146,
+     "pct_change": 107.3
+    },
+    "markers_fell_over_50pct": 0,
+    "total_markers": 9
+   },
+   "C002": {
+    "crp": {
+     "analyte": "CRP",
+     "unit": "mg/L",
+     "l3_value": 1.9,
+     "r1_value": 1.478,
+     "pct_change": -22.2
+    },
+    "markers_fell_over_50pct": 8,
+    "total_markers": 9
+   },
+   "C003": {
+    "crp": {
+     "analyte": "CRP",
+     "unit": "mg/L",
+     "l3_value": 2.2,
+     "r1_value": 4.294,
+     "pct_change": 95.2
+    },
+    "markers_fell_over_50pct": 0,
+    "total_markers": 9
+   },
+   "C004": {
+    "crp": {
+     "analyte": "CRP",
+     "unit": "mg/L",
+     "l3_value": 1.8,
+     "r1_value": 2.318,
+     "pct_change": 28.8
+    },
+    "markers_fell_over_50pct": 0,
+    "total_markers": 9
+   }
+  }
+ },
+ "/api/v1/health/deps": {
+  "db": true,
+  "db_path": "/home/hatch/workspace/orbitmafia2.0/data/orbit_mafia.db",
+  "counts": {
+   "biomarkers": 252,
+   "daily": 32
+  },
+  "groq_key_present": false,
+  "copilot": "cached-offline-answers (no API key, no live AI claim)"
+ },
  "/api/v1/crew/C001": {
   "id": "C001",
   "name": "Crew C001",
@@ -5623,7 +5688,7 @@
   ]
  },
  "_meta": {
-  "label": "Built-in demo snapshot \u2014 same values the API serves. Labelled snapshot, not live data.",
+  "label": "Labelled built-in snapshot. Same values the API serves; shown ONLY when the backend is unreachable, with an OFFLINE banner.",
   "generated": "2026-11-15"
  }
 }

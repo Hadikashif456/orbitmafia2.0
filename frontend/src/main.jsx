@@ -1,14 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { createRoot } from 'react-dom/client'
 import { api, BAND_COLOR, LEVEL_COLOR } from './api'
-import { LineChart, Gauge, HBar } from './charts'
+import { LineChart, Gauge, HBar, AnimatedNumber } from './charts'
 import './styles.css'
+
+/* ---------- error boundary: one bad page can never blank the whole app ----------
+   A render error in React unmounts the entire tree — header, nav and all.
+   This catches it per route: the header and nav stay, and the user gets a
+   plain message plus a way home. (Nov 15: a misplaced .catch() on the Alerts
+   page did exactly this — the whole app went blank. It is fixed, and this
+   boundary makes sure no future page bug can do it again.) */
+class ErrorBoundary extends React.Component {
+  constructor(p) { super(p); this.state = { err: null } }
+  static getDerivedStateFromError(err) { return { err } }
+  componentDidCatch(err) { if (typeof window !== 'undefined') window.__om2LastError = err }
+  render() {
+    if (this.state.err) {
+      return (
+        <div className="wrap"><section><div className="err">
+          <h3>This page hit a problem</h3>
+          <p className="small muted">The header and navigation still work — only this page failed. {String(this.state.err.message || this.state.err)}</p>
+          <button className="btn sm" onClick={() => { this.setState({ err: null }); go('home') }}>Back to Home</button>
+          <button className="btn ghost sm" style={{ marginLeft: 8 }} onClick={() => window.location.reload()}>Reload the page</button>
+        </div></section></div>
+      )
+    }
+    return this.props.children
+  }
+}
 
 /* ---------- router ---------- */
 function useHash() {
   const [h, setH] = useState(window.location.hash.slice(2) || 'home')
   useEffect(() => {
-    const f = () => setH(window.location.hash.slice(2) || 'home')
+    const f = () => { setH(window.location.hash.slice(2) || 'home'); window.scrollTo(0, 0) }
     window.addEventListener('hashchange', f)
     return () => window.removeEventListener('hashchange', f)
   }, [])
@@ -17,25 +42,46 @@ function useHash() {
 const go = p => { window.location.hash = '#/' + p }
 const NAV = [['home','Home'],['dashboard','Dashboard'],['crew','Crew'],['replay','Mission Replay'],['recovery','Recovery'],['drivers','CRI Drivers'],['alerts','Alerts'],['checkin','Daily Check-in'],['live','Live Monitor'],['copilot','Copilot'],['data','Data & Method']]
 
-/* ---------- data hook: errors shown loudly, never silent mock ---------- */
-function useApi(path, deps = []) {
+/* ---------- data hook: errors shown loudly, never silent mock ----------
+   Fetches once on mount, then re-fetches on a timer (pollMs) and on demand
+   (refresh). A refresh never blanks the page: old data stays visible while
+   new data loads, and `updatedAt` proves the numbers are actually moving. */
+function useApi(path, deps = [], opts = {}) {
+  const { pollMs = 0 } = opts
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [snap, setSnap] = useState(false)
+  const [updatedAt, setUpdatedAt] = useState(null)
+  const [refreshing, setRefreshing] = useState(false)
+  const mounted = useRef(true)
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false } }, [])
+  const load = useCallback(async (initial) => {
+    if (initial) { setData(null); setError(null); setSnap(false) } else setRefreshing(true)
+    try {
+      const d = await api(path)
+      if (!mounted.current) return
+      setData(d); setError(null); setUpdatedAt(new Date())
+    } catch (e) {
+      if (mounted.current && initial) setError(String(e.message || e))
+    } finally {
+      if (mounted.current) setRefreshing(false)
+    }
+  }, [path])
+  useEffect(() => { load(true) }, [path, ...(deps || [])])
   useEffect(() => {
-    let alive = true
-    setData(null); setError(null); setSnap(false)
-    api(path).then(d => alive && setData(d)).catch(e => alive && setError(String(e.message || e)))
-    return () => { alive = false }
-  }, deps)
+    if (!pollMs) return
+    const t = setInterval(() => load(false), pollMs)
+    return () => clearInterval(t)
+  }, [pollMs, load])
   const useSnapshot = async () => {
     try {
       const res = await fetch('/snapshot.json')
       const all = await res.json()
-      setData(all[path]); setSnap(true); setError(null)
+      if (!all[path]) throw new Error('snapshot has no entry for ' + path)
+      setData(all[path]); setSnap(true); setError(null); setUpdatedAt(new Date())
     } catch (e) { setError('Snapshot also unavailable: ' + e.message) }
   }
-  return { data, error, snap, useSnapshot }
+  return { data, error, snap, useSnapshot, refresh: () => load(false), updatedAt, refreshing }
 }
 
 function ErrorBox({ error, onSnapshot }) {
@@ -50,18 +96,50 @@ function ErrorBox({ error, onSnapshot }) {
   )
 }
 
-/* ---------- live backend status (in the header on every page) ---------- */
+/* ---------- live backend status (in the header on every page) ----------
+   Re-checked every 15 s, so it recovers to LIVE on its own if the backend
+   starts later, and flips to OFFLINE if the backend dies. */
 function HealthStatus() {
   const [s, setS] = useState(null)
   useEffect(() => {
-    api('/api/v1/health/deps')
-      .then(d => setS({ live: true, bio: d.counts.biomarkers, daily: d.counts.daily }))
-      .catch(() => setS({ live: false }))
+    let alive = true
+    const check = () => api('/api/v1/health/deps')
+      .then(d => alive && setS({ live: true, bio: d.counts.biomarkers, daily: d.counts.daily, at: new Date() }))
+      .catch(() => alive && setS({ live: false }))
+    check()
+    const t = setInterval(check, 15000)
+    return () => { alive = false; clearInterval(t) }
   }, [])
   if (!s) return <span className="status-pill"><span className="status-dot" style={{ background: '#7d6a92', boxShadow: 'none', animation: 'none' }} />CHECKING…</span>
   return s.live
-    ? <span className="status-pill" style={{ color: '#34d399', borderColor: 'rgba(52,211,153,.5)' }}><span className="status-dot" />LIVE · {s.bio} LABS · {s.daily} DAILY</span>
+    ? <span className="status-pill" style={{ color: '#34d399', borderColor: 'rgba(52,211,153,.5)' }} title={s.at ? 'Last checked ' + s.at.toLocaleTimeString('en-GB') : ''}><span className="status-dot" />LIVE · {s.bio} LABS · {s.daily} DAILY</span>
     : <span className="status-pill" style={{ color: '#f87171', borderColor: 'rgba(248,113,113,.5)' }}><span className="status-dot off" />OFFLINE</span>
+}
+
+/* ---------- scroll reveal + refresh control ---------- */
+function Reveal({ children, delay = 0, className = '' }) {
+  const ref = useRef(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (!('IntersectionObserver' in window)) { setInView(true); return }
+    const ob = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { setInView(true); ob.disconnect() } })
+    }, { threshold: 0.08, rootMargin: '0px 0px 60px 0px' }) // reveal slightly BEFORE the element scrolls in — feels instant on touch scroll
+    ob.observe(el)
+    return () => ob.disconnect()
+  }, [])
+  return <div ref={ref} className={`reveal ${inView ? 'in' : ''} ${className}`} style={{ '--d': `${delay}s` }}>{children}</div>
+}
+
+function RefreshBar({ updatedAt, onRefresh, refreshing }) {
+  return (
+    <div className="refresh-bar">
+      <span>Updated {updatedAt ? updatedAt.toLocaleTimeString('en-GB') : '—'}</span>
+      <button className="btn ghost sm" onClick={onRefresh}>{refreshing ? 'Refreshing…' : '↻ Refresh data'}</button>
+    </div>
+  )
 }
 
 /* ---------- shared bits ---------- */
@@ -83,37 +161,40 @@ function Home() {
   const labs = useApi('/api/v1/labs/summary')
   const counts = labs.data ? labs.data.counts : null
   return (<>
-    <header className="hero"><div className="orbit" /><div className="wrap">
-      <p className="eyebrow">NASA Space Apps Challenge 2026 · Challenge #5</p>
-      <h1>Your crew's health,<br />twelve minutes<br />from <em>Earth.</em></h1>
-      <p className="lede">Orbit Mafia 2.0 watches four astronauts on a Mars transit with real NASA blood data,
+    <header className="hero"><div className="orbit" /><div className="orbit-ring2" /><div className="orbit-core" /><div className="glow-orb a" /><div className="glow-orb b" /><div className="wrap">
+      <p className="eyebrow anim-in" style={{ '--d': '0s' }}>NASA Space Apps Challenge 2026 · Challenge #5</p>
+      <h1><span className="anim-in" style={{ '--d': '.08s', display: 'block' }}>Your crew's health,</span><span className="anim-in" style={{ '--d': '.18s', display: 'block' }}>twelve minutes</span><span className="anim-in" style={{ '--d': '.28s', display: 'block' }}>from <em className="grad-text">Earth.</em></span></h1>
+      <p className="lede anim-in" style={{ '--d': '.38s' }}>Orbit Mafia 2.0 watches four astronauts on a Mars transit with real NASA blood data,
         one honest resilience score, and a plan for what to do next — before Earth can even answer.</p>
-      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+      <div className="anim-in" style={{ '--d': '.5s', display: 'flex', gap: 12, flexWrap: 'wrap' }}>
         <a className="btn" href="#/dashboard">Open the dashboard →</a>
         <a className="btn ghost" href="#/replay">Replay Sol 140–147</a>
       </div>
-      <div className="hero-stats">
-        <div><b>{counts ? counts.biomarkers : '…'}</b><span>Real OSD-575 lab rows</span></div>
-        <div><b>{counts ? counts.analytes : '…'}</b><span>Immune analytes</span></div>
-        <div><b>{counts ? counts.crew : '…'}</b><span>Crew members</span></div>
+      <div className="hero-stats anim-in" style={{ '--d': '.62s' }}>
+        <div><b>{counts ? <AnimatedNumber value={counts.biomarkers} fromZero /> : '…'}</b><span>Real OSD-575 lab rows</span></div>
+        <div><b>{counts ? <AnimatedNumber value={counts.analytes} fromZero /> : '…'}</b><span>Immune analytes</span></div>
+        <div><b>{counts ? <AnimatedNumber value={counts.crew} fromZero /> : '…'}</b><span>Crew members</span></div>
         <div><b>1</b><span>Transparent CRI score</span></div>
         <div><b>0</b><span>Black boxes</span></div>
       </div>
-      {counts && <p className="small muted" style={{ marginTop: 18 }}><span className="real-badge">Real NASA OSD-575</span>{' '}Counts above come from the live API, straight from the database — nothing on this page is a typed-in number.</p>}
+      {counts && <p className="small muted anim-in" style={{ '--d': '.72s', marginTop: 18 }}><span className="real-badge">Real NASA OSD-575</span>{' '}Counts above come from the live API, straight from the database — nothing on this page is a typed-in number.</p>}
     </div></header>
+    <div className="marquee" aria-hidden="true"><div className="marquee-track">
+      {[0, 1].map(k => <span key={k}>Real NASA <b>OSD-575</b> ✦ <b>252</b> lab rows ✦ <b>9</b> analytes ✦ <b>4</b> crew ✦ CRI <b>47.9–99.0</b> ✦ Earth is <b>12 min</b> away ✦&nbsp;</span>)}
+    </div></div>
     <section><div className="wrap">
       <p className="eyebrow">Why this is different</p>
       <h2 style={{ fontSize: 32, margin: '8px 0 20px' }}>Real blood. One honest number. A plan, not a chart.</h2>
-      <div className="grid g3">
+      <Reveal><div className="grid g3 stagger-grid">
         <div className="card"><h3>Real NASA lab data</h3><p className="muted small">OSD-575, Version 3, HDCVD9 panel: 28 real samples, 9 analytes, 252 values. CRP rose +107.3% in C001 after landing. We show the numbers, not a story about them.</p></div>
         <div className="card"><h3>One score you can check</h3><p className="muted small">The Crew Resilience Index is a published formula — sleep, HRV, heart rate, oxygen, mood, reaction time, temperature. Anyone can recompute it. The API does, on every request.</p></div>
         <div className="card"><h3>Built for the delay</h3><p className="muted small">Every alert says why it fired, what to do now, and when Ground can answer. No waiting. No diagnosis. Just the next step, in plain words.</p></div>
         <div className="card"><h3>Mission replay</h3><p className="muted small">Scrub Sol 140 to 147 and watch the crew fall and recover — the solar event on Sol 144, the EVA on Sol 143, the recovery that followed.</p></div>
         <div className="card"><h3>Daily check-in</h3><p className="muted small">Two minutes a day: sleep, mood, symptoms, a 30-second reaction test. It computes your CRI instantly and stores it on the device.</p></div>
         <div className="card"><h3>Honest about data</h3><p className="muted small">Daily vitals are labelled synthetic — OSD-575 has no daily sleep or heart-rate series. Real and synthetic are never mixed without a label. See Data &amp; Method.</p></div>
-      </div>
+      </div></Reveal>
     </div></section>
-    <section style={{ paddingTop: 0 }}><div className="wrap"><div className="card" style={{ padding: 28 }}>
+    <section style={{ paddingTop: 0 }}><div className="wrap"><Reveal><div className="card" style={{ padding: 28 }}>
       <h2 style={{ margin: '0 0 8px' }}>Judges: start here (3 minutes)</h2>
       <ol className="small muted" style={{ lineHeight: 2 }}>
         <li><b style={{ color: '#e8ecf4' }}>Dashboard</b> — the crew at a glance, worst CRI first.</li>
@@ -122,31 +203,33 @@ function Home() {
         <li><b style={{ color: '#e8ecf4' }}>Data &amp; Method</b> — what is real, what is synthetic, what AI did.</li>
       </ol>
       <a className="btn" href="#/dashboard">Start the tour →</a>
-    </div></div></section>
+    </div></Reveal></div></section>
   </>)
 }
 
 function Dashboard() {
-  const { data, error, snap, useSnapshot } = useApi('/api/v1/crew')
-  const sum = useApi('/api/v1/mission/summary')
-  const deps = useApi('/api/v1/health/deps')
-  const labs = useApi('/api/v1/labs/summary')
+  const { data, error, snap, useSnapshot, refresh, updatedAt, refreshing } = useApi('/api/v1/crew', [], { pollMs: 30000 })
+  const sum = useApi('/api/v1/mission/summary', [], { pollMs: 30000 })
+  const deps = useApi('/api/v1/health/deps', [], { pollMs: 30000 })
+  const labs = useApi('/api/v1/labs/summary', [], { pollMs: 30000 })
   if (error) return <div className="wrap"><section><ErrorBox error={error} onSnapshot={useSnapshot} /></section></div>
   if (!data) return <div className="wrap"><section><p className="muted">Loading crew…</p></section></div>
   const crew = [...data.crew].sort((a, b) => (a.cri ?? 99) - (b.cri ?? 99))
   const worst = crew[0]
+  const avg = crew.reduce((s, c) => s + c.cri, 0) / crew.length
   return (<div className="wrap"><section>
     {snap && <div className="offline-banner">OFFLINE — showing labelled snapshot, backend unreachable. These values are a saved copy, not live data.</div>}
     <p className="eyebrow">Sol 147 · Mars Transit · 4 crew</p>
     <h1 style={{ fontSize: 40, margin: '8px 0 4px' }}>Good day, Ground.</h1>
-    <p className="muted" style={{ marginTop: 0 }}>The whole crew is back in the green. The one to watch is still <b style={{ color: '#e8ecf4' }}>{worst.callsign}</b> — CRI {worst.cri}.</p>
+    <p className="muted" style={{ marginTop: 0 }}>The whole crew is back in the green. The one to watch is still <b style={{ color: '#e8ecf4' }}>{worst.callsign}</b> — CRI <AnimatedNumber value={worst.cri} decimals={1} />.</p>
+    <RefreshBar updatedAt={updatedAt} onRefresh={refresh} refreshing={refreshing} />
     <DelayBanner />
-    <div className="grid g4">
-      <div className="card kpi"><span>Lowest CRI</span><b style={{ color: BAND_COLOR[worst.cri_band] }}>{worst.cri}</b><span>{worst.callsign} · {worst.cri_band}</span></div>
-      <div className="card kpi"><span>Crew average CRI</span><b>{(crew.reduce((s, c) => s + c.cri, 0) / crew.length).toFixed(1)}</b><span>Sol 147</span></div>
-      <div className="card kpi"><span>Open alerts</span><b>{sum.data ? sum.data.total_alerts : '…'}</b><span>Across all crew</span></div>
-      <div className="card kpi"><span>Real lab rows</span><b>{deps.data ? deps.data.counts.biomarkers : '…'}</b><span>OSD-575 · HDCVD9</span></div>
-    </div>
+    <Reveal><div className="grid g4">
+      <div className="card kpi"><span>Lowest CRI</span><b style={{ color: BAND_COLOR[worst.cri_band] }}><AnimatedNumber value={worst.cri} decimals={1} /></b><span>{worst.callsign} · {worst.cri_band}</span></div>
+      <div className="card kpi"><span>Crew average CRI</span><b><AnimatedNumber value={avg} decimals={1} /></b><span>Sol 147</span></div>
+      <div className="card kpi"><span>Open alerts</span><b>{sum.data ? <AnimatedNumber value={sum.data.total_alerts} fromZero /> : '…'}</b><span>Across all crew</span></div>
+      <div className="card kpi"><span>Real lab rows</span><b>{deps.data ? <AnimatedNumber value={deps.data.counts.biomarkers} fromZero /> : '…'}</b><span>OSD-575 · HDCVD9</span></div>
+    </div></Reveal>
     <h2 style={{ margin: '32px 0 12px' }}>Real NASA lab evidence — OSD-575 <span className="real-badge">Real NASA OSD-575</span></h2>
     {labs.data ? <div className="card">
       <p className="small muted" style={{ marginTop: 0 }}>CRP change from 3 days before landing (L-3) to the day after (R+1) — straight from the real OSD-575 blood panel, served by the API. No typed-in numbers.</p>
@@ -165,7 +248,7 @@ function Dashboard() {
       <p className="small muted">C002 is the warning: 8 of 9 immune markers fell over 50% at R+1. That real lab crash is what the Sol 144 CRI dip in Mission Replay is anchored to.</p>
     </div> : <p className="muted small">Loading lab evidence…</p>}
     <h2 style={{ margin: '32px 0 12px' }}>Crew resilience — Sol 147</h2>
-    <div className="card">
+    <Reveal><div className="card">
       {crew.map(c => <HBar key={c.id} label={`${c.callsign} (${c.id}) — ${c.role}`} value={c.cri} max={100} color={c.color} />)}
       <p className="small muted">CRI out of 100. Open a crew member for the full 8-Sol trend chart.</p>
       <div className="grid g4" style={{ marginTop: 12 }}>
@@ -174,13 +257,13 @@ function Dashboard() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <b>{c.callsign}</b><Badge band={c.cri_band} />
             </div>
-            <div style={{ fontSize: 30, fontFamily: "'Space Grotesk'", marginTop: 6 }}>{c.cri}</div>
+            <div style={{ fontSize: 30, fontFamily: "'Space Grotesk'", marginTop: 6 }}><AnimatedNumber value={c.cri} decimals={1} /></div>
             <div className="small muted">{c.role}</div>
             <button className="btn ghost sm" style={{ marginTop: 10 }} onClick={() => go('crew/' + c.id)}>Open profile →</button>
           </div>
         ))}
       </div>
-    </div>
+    </div></Reveal>
     <h2 style={{ margin: '32px 0 12px' }}>What needs attention</h2>
     <CrewAlertsQuick crew={crew} />
   </section></div>)
@@ -206,14 +289,15 @@ function CrewAlertsQuick({ crew }) {
 }
 
 function CrewBoard() {
-  const { data, error, snap, useSnapshot } = useApi('/api/v1/crew')
+  const { data, error, snap, useSnapshot, refresh, updatedAt, refreshing } = useApi('/api/v1/crew', [], { pollMs: 30000 })
   if (error) return <div className="wrap"><section><ErrorBox error={error} onSnapshot={useSnapshot} /></section></div>
   if (!data) return <div className="wrap"><section><p className="muted">Loading crew…</p></section></div>
   return (<div className="wrap"><section>
     {snap && <div className="offline-banner">OFFLINE — showing labelled snapshot, backend unreachable. These values are a saved copy, not live data.</div>}
     <p className="eyebrow">Crew board · Sol 147</p>
     <h1 style={{ fontSize: 38, margin: '8px 0 18px' }}>Four people. One mission.</h1>
-    <div className="grid g2">
+    <RefreshBar updatedAt={updatedAt} onRefresh={refresh} refreshing={refreshing} />
+    <Reveal><div className="grid g2">
       {data.crew.map(c => (
         <div key={c.id} className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -222,7 +306,7 @@ function CrewBoard() {
             <Badge band={c.cri_band} />
           </div>
           <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginTop: 14 }}>
-            <div style={{ fontSize: 40, fontFamily: "'Space Grotesk'", color: c.color }}>{c.cri}</div>
+            <div style={{ fontSize: 40, fontFamily: "'Space Grotesk'", color: c.color }}><AnimatedNumber value={c.cri} decimals={1} /></div>
             <p className="small muted" style={{ margin: 0 }}>{c.notes}</p>
           </div>
           <div className="grid g4" style={{ marginTop: 14 }}>
@@ -235,12 +319,12 @@ function CrewBoard() {
           <button className="btn sm" style={{ marginTop: 14 }} onClick={() => go('crew/' + c.id)}>Full profile →</button>
         </div>
       ))}
-    </div>
+    </div></Reveal>
   </section></div>)
 }
 
 function Detail({ id }) {
-  const { data, error, snap, useSnapshot } = useApi(`/api/v1/crew/${id}`, [id])
+  const { data, error, snap, useSnapshot, refresh, updatedAt, refreshing } = useApi(`/api/v1/crew/${id}`, [id], { pollMs: 30000 })
   const trend = useApi(`/api/v1/crew/${id}/trend`, [id])
   if (error) return <div className="wrap"><section><ErrorBox error={error} onSnapshot={useSnapshot} /></section></div>
   if (!data) return <div className="wrap"><section><p className="muted">Loading profile…</p></section></div>
@@ -248,6 +332,7 @@ function Detail({ id }) {
   return (<div className="wrap"><section>
     {snap && <div className="offline-banner">OFFLINE — showing labelled snapshot, backend unreachable. These values are a saved copy, not live data.</div>}
     <button className="btn ghost sm" onClick={() => go('crew')}>← Crew board</button>
+    <RefreshBar updatedAt={updatedAt} onRefresh={refresh} refreshing={refreshing} />
     <div style={{ display: 'flex', gap: 12, alignItems: 'baseline', flexWrap: 'wrap', marginTop: 14 }}>
       <h1 style={{ fontSize: 38, margin: 0 }}>{data.callsign}</h1><Badge band={data.cri_band} />
       <span className="muted">{data.id} · {data.role} · Age {data.age}</span>
@@ -320,6 +405,8 @@ function Replay() {
   if (!data) return <div className="wrap"><section><p className="muted">Loading replay…</p></section></div>
   const frame = data.frames.find(f => f.sol === sol)
   const ev = data.events.find(e => e.sol === sol)
+  const c002 = frame ? frame.crew.find(c => c.crew_id === 'C002') : null
+  const c002Band = c002 ? (c002.cri >= 90 ? 'EXCELLENT' : c002.cri >= 75 ? 'GOOD' : c002.cri >= 60 ? 'WATCH' : c002.cri >= 40 ? 'ACT' : 'URGENT') : 'GOOD'
   return (<div className="wrap"><section>
     {snap && <div className="offline-banner">OFFLINE — showing labelled snapshot, backend unreachable. These values are a saved copy, not live data.</div>}
     <p className="eyebrow">Mission replay · Mars Transit</p>
@@ -330,24 +417,33 @@ function Replay() {
       <p className="small muted" style={{ margin: '10px 0 0' }}>This replay is a <b style={{ color: '#e8ecf4' }}>mission scenario</b> — but the Sol 144 dip is anchored to real lab evidence: C002's immune panel crashed at R+1 ({labs.data.per_crew.C002.markers_fell_over_50pct} of 9 markers fell over 50%), and CRP rose +{labs.data.per_crew.C001.crp.pct_change}% in C001 and +{labs.data.per_crew.C003.crp.pct_change}% in C003. The daily numbers are simulated; the lab crash behind them is real.</p>
     </div>}
     <div className="card">
-      <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+        <button className="btn ghost sm sol-btn" disabled={sol <= 140} onClick={() => { setPlaying(false); setSol(sol - 1) }} aria-label="Previous Sol">‹</button>
         <button className="btn sm" onClick={() => setPlaying(p => !p)}>{playing ? '⏸ Pause' : '▶ Play replay'}</button>
+        <button className="btn ghost sm sol-btn" disabled={sol >= 147} onClick={() => { setPlaying(false); setSol(sol + 1) }} aria-label="Next Sol">›</button>
         <span style={{ fontSize: 34, fontFamily: "'Space Grotesk'" }}>Sol {sol}</span>
         <span className="muted">{ev ? ev.title + ' — ' + ev.detail : ''}</span>
       </div>
-      <input type="range" min="140" max="147" step="1" value={sol} onChange={e => setSol(+e.target.value)} aria-label="Mission Sol" />
+      <input type="range" min="140" max="147" step="1" value={sol} onChange={e => { setPlaying(false); setSol(+e.target.value) }} aria-label="Mission Sol" />
       <div style={{ display: 'flex', justifyContent: 'space-between' }} className="small muted"><span>Sol 140</span><span>Sol 144 · solar event</span><span>Sol 147</span></div>
     </div>
-    <div className="grid g4" style={{ marginTop: 16 }}>
+    {c002 && <div className="card" style={{ marginTop: 16, borderColor: 'rgba(251,191,36,.4)', display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap' }}>
+      <div><span className="small muted">ORBIT · C002 — CRI on Sol {sol}</span>
+        <div style={{ fontSize: 52, fontFamily: "'Space Grotesk'", lineHeight: 1, color: BAND_COLOR[c002Band] }}><AnimatedNumber value={c002.cri} decimals={1} /></div>
+      </div>
+      <Badge band={c002Band} />
+      <p className="small muted" style={{ margin: 0, flex: '1 1 220px' }}>Drag the slider and watch this number move: Sol 140 <b style={{ color: '#e8ecf4' }}>79.8</b> → Sol 142 <b style={{ color: '#e8ecf4' }}>61.7</b> → Sol 144 <b style={{ color: '#e8ecf4' }}>47.9</b> → Sol 147 <b style={{ color: '#e8ecf4' }}>79.8</b>. Every value comes from the replay API — nothing here is typed in.</p>
+    </div>}
+    <Reveal><div className="grid g4" style={{ marginTop: 16 }}>
       {frame.crew.map(c => (
         <div key={c.crew_id} className="card" style={{ textAlign: 'center' }}>
           <div className="small muted">{c.crew_id}</div>
-          <div style={{ fontSize: 40, fontFamily: "'Space Grotesk'", color: BAND_COLOR[c.cri >= 90 ? 'EXCELLENT' : c.cri >= 75 ? 'GOOD' : c.cri >= 60 ? 'WATCH' : c.cri >= 40 ? 'ACT' : 'URGENT'] }}>{c.cri}</div>
+          <div style={{ fontSize: 40, fontFamily: "'Space Grotesk'", color: BAND_COLOR[c.cri >= 90 ? 'EXCELLENT' : c.cri >= 75 ? 'GOOD' : c.cri >= 60 ? 'WATCH' : c.cri >= 40 ? 'ACT' : 'URGENT'] }}><AnimatedNumber value={c.cri} decimals={1} /></div>
           <Badge band={c.cri >= 90 ? 'EXCELLENT' : c.cri >= 75 ? 'GOOD' : c.cri >= 60 ? 'WATCH' : c.cri >= 40 ? 'ACT' : 'URGENT'} />
-          <p className="small muted" style={{ marginTop: 10 }}>HR {c.heart_rate} · HRV {c.hrv_ms} · Sleep {c.sleep_hours}h<br />SpO2 {c.spo2}% · Rad {c.radiation_mgy} mGy</p>
+          <p className="small muted" style={{ marginTop: 10 }}>HR <AnimatedNumber value={c.heart_rate} /> · HRV <AnimatedNumber value={c.hrv_ms} /> · Sleep {c.sleep_hours}h<br />SpO2 {c.spo2}% · Rad {c.radiation_mgy} mGy</p>
         </div>
       ))}
-    </div>
+    </div></Reveal>
     <h2 style={{ margin: '30px 0 12px' }}>Mission timeline</h2>
     <div className="timeline">
       {data.events.map(e => (
@@ -374,7 +470,7 @@ function Recovery() {
     <p className="eyebrow">Recovery · Sol 145–147</p>
     <h1 style={{ fontSize: 38, margin: '8px 0' }}>The way back to green.</h1>
     <p className="muted">Recovery is not rest alone. It is sleep protected, load cut, and a re-test that proves it worked. <span className="sim-badge">Scenario · simulated</span></p>
-    <div className="grid g2">
+    <Reveal><div className="grid g2">
       {data ? data.crew.map(c => (
         <div key={c.id} className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between' }}><h3>{c.callsign} <span className="muted small">{c.id}</span></h3><Badge band={c.cri_band} /></div>
@@ -383,7 +479,7 @@ function Recovery() {
           <button className="btn ghost sm" onClick={() => go('crew/' + c.id)}>See {c.callsign}'s profile →</button>
         </div>
       )) : <p className="muted">Loading crew…</p>}
-    </div>
+    </div></Reveal>
     <div className="card" style={{ marginTop: 16 }}>
       <h3>What recovery looked like</h3>
       <p className="small muted">The low point of the mission was C002 at {mins.C002 ?? '…'} CRI (Sol 144, solar event) — the lowest score in the crew.
@@ -427,7 +523,7 @@ function Drivers() {
       <p className="small muted">Bands: 90–100 EXCELLENT · 75–89 GOOD · 60–74 WATCH · 40–59 ACT · 0–39 URGENT. CRI is decision support, never a diagnosis.</p>
     </div>
     <h2 style={{ margin: '28px 0 12px' }}>Top driver per crew member</h2>
-    <div className="grid g2">
+    <Reveal><div className="grid g2">
       {data ? data.crew.map(c => {
         const top = details[c.id] && details[c.id].drivers && details[c.id].drivers[0]
         return (
@@ -436,7 +532,7 @@ function Drivers() {
             <button className="btn ghost sm" onClick={() => go('crew/' + c.id)}>See the full breakdown →</button>
           </div>)
       }) : <p className="muted">Loading…</p>}
-    </div>
+    </div></Reveal>
   </section></div>)
 }
 
@@ -444,10 +540,25 @@ function AlertsPage() {
   const { data } = useApi('/api/v1/crew')
   const labs = useApi('/api/v1/labs/summary')
   const [all, setAll] = useState([])
+  /* FIX (2026-11-15): the old line was
+     Promise.all(data.crew.map(c => api(...).then(...)).catch(() => []))
+     — the .catch() sat on the ARRAY returned by .map(), not on the promise,
+     so it threw "data.crew.map(...).catch is not a function" the moment the
+     crew data arrived, and React unmounted the whole app (blank page, no
+     header). Rewritten with async/await so the grouping cannot be misread. */
   useEffect(() => {
     if (!data) return
-    Promise.all(data.crew.map(c => api(`/api/v1/crew/${c.id}/alerts`).then(d => d.alerts.map(a => ({ ...a, cid: c.id, callsign: c.callsign })))).catch(() => []))
-      .then(lists => setAll(lists.flat()))
+    let alive = true
+    ;(async () => {
+      try {
+        const lists = await Promise.all(data.crew.map(async c => {
+          const d = await api(`/api/v1/crew/${c.id}/alerts`)
+          return (d.alerts || []).map(a => ({ ...a, cid: c.id, callsign: c.callsign }))
+        }))
+        if (alive) setAll(lists.flat())
+      } catch { if (alive) setAll([]) }
+    })()
+    return () => { alive = false }
   }, [data])
   return (<div className="wrap"><section>
     <p className="eyebrow">Alerts · all crew</p>
@@ -457,14 +568,14 @@ function AlertsPage() {
       <span className="real-badge">Real NASA OSD-575</span>
       <p className="small muted" style={{ margin: '10px 0 0' }}>Lab evidence behind these alerts, straight from the real OSD-575 panel: C002 — {labs.data.per_crew.C002.markers_fell_over_50pct} of 9 immune markers fell over 50% at R+1. CRP after landing: C001 +{labs.data.per_crew.C001.crp.pct_change}% · C002 {labs.data.per_crew.C002.crp.pct_change}% · C003 +{labs.data.per_crew.C003.crp.pct_change}% · C004 +{labs.data.per_crew.C004.crp.pct_change}%.</p>
     </div>}
-    {!data ? <p className="muted">Loading…</p> : all.length === 0 ? <p className="muted">No open alerts.</p> : all.map(a => (
-      <div key={a.id} className={`alert ${a.level}`}>
-        <span className="badge" style={{ background: LEVEL_COLOR[a.level] + '22', color: LEVEL_COLOR[a.level] }}>{a.level}</span>{' '}
+    {!data ? <p className="muted">Loading…</p> : all.length === 0 ? <p className="muted">No open alerts.</p> : all.map((a, i) => (
+      <Reveal key={a.id} delay={Math.min(i * 0.06, 0.3)}><div className={`alert ${a.level}`}>
+        <span className="badge" style={{ background: (LEVEL_COLOR[a.level] || '#fbbf24') + '22', color: LEVEL_COLOR[a.level] || '#fbbf24' }}>{a.level}</span>{' '}
         <b>{a.title}</b> <span className="small muted">{a.callsign} · {a.system}</span>
         <p className="small muted">{a.why}</p>
-        <ul className="checklist">{a.actions.map((x, i) => <li key={i}>{x}</li>)}</ul>
+        <ul className="checklist">{(a.actions || []).map((x, j) => <li key={j}>{x}</li>)}</ul>
         <p className="small"><b>Escalation:</b> {a.escalation}</p>
-      </div>
+      </div></Reveal>
     ))}
   </section></div>)
 }
@@ -483,6 +594,10 @@ function CheckIn() {
   const [saved, setSaved] = useState(() => { try { return JSON.parse(localStorage.getItem('om2-checkins') || '[]') } catch { return [] } })
   const cri = criJS(f)
   const band = cri >= 90 ? 'EXCELLENT' : cri >= 75 ? 'GOOD' : cri >= 60 ? 'WATCH' : cri >= 40 ? 'ACT' : 'URGENT'
+  /* Biggest single drag on CRI right now, computed live from the sliders —
+     so the user can see exactly which slider moves the number. */
+  const pens = [['Sleep', Math.max(0, 7 - f.sleep) * 6], ['HRV', Math.max(0, 65 - f.hrv) * 0.35], ['Heart rate', Math.max(0, f.hr - 75) * 0.8], ['SpO2', Math.max(0, 97 - f.spo2) * 4], ['Mood', Math.max(0, 7 - f.mood) * 3], ['Reaction', Math.max(0, f.rt - 280) * 0.05], ['Temperature', Math.max(0, f.temp - 37.3) * 10]].sort((a, b) => b[1] - a[1])
+  const topPen = pens[0]
   const save = () => {
     const entry = { date: new Date().toISOString().slice(0, 10), ...f, cri, band }
     const next = [entry, ...saved].slice(0, 30)
@@ -510,6 +625,7 @@ function CheckIn() {
           <Gauge value={cri} color={BAND_COLOR[band]} />
           <Badge band={band} />
           <p className="small muted" style={{ marginTop: 12 }}>{cri >= 75 ? 'You are good to fly today. Keep the routine that got you here.' : cri >= 60 ? 'Watch it: protect sleep tonight and recheck in the morning.' : 'Act today: cut non-essential tasks and tell the Crew Medical Officer.'}</p>
+          <p className="small" style={{ marginTop: 8 }}>{topPen[1] > 0 ? <>Biggest drag right now: <b>{topPen[0]} −{topPen[1].toFixed(1)} pts</b> — move that slider and watch CRI climb.</> : 'Nothing is dragging CRI down right now.'}</p>
           <button className="btn" onClick={save}>Save today's check-in</button>
         </div>
         {saved.length > 0 && <div className="card" style={{ marginTop: 16 }}>
@@ -521,24 +637,37 @@ function CheckIn() {
   </section></div>)
 }
 
+/* Live Monitor — steps through the 8 stored Sols for C002 (ORBIT) from the
+   real API trend endpoint, one Sol every 2 seconds, looping. No random
+   numbers anywhere: every value on screen is a stored row from the database.
+   Still labelled a simulated stream, because the daily rows are a scenario. */
 function Live() {
-  const { data } = useApi('/api/v1/crew')
-  const base = data ? data.crew[1] : null
-  const [hr, setHr] = useState(null)
+  const { data, error } = useApi('/api/v1/crew/C002/trend')
+  const rows = data ? data.trend : null
+  const [idx, setIdx] = useState(0)
   const [tick, setTick] = useState(0)
-  useEffect(() => { if (base) setHr(base.latest.heart_rate) }, [data])
+  useEffect(() => { setIdx(0); setTick(0) }, [data])
   useEffect(() => {
-    const t = setInterval(() => { setHr(h => (h === null ? h : Math.max(58, Math.min(82, h + Math.round((Math.random() - 0.5) * 4))))); setTick(x => x + 1) }, 2000)
+    if (!rows || !rows.length) return
+    const t = setInterval(() => { setIdx(i => (i + 1) % rows.length); setTick(x => x + 1) }, 2000)
     return () => clearInterval(t)
-  }, [])
+  }, [rows])
+  const row = rows ? rows[idx % rows.length] : null
+  const band = row ? (row.cri >= 90 ? 'EXCELLENT' : row.cri >= 75 ? 'GOOD' : row.cri >= 60 ? 'WATCH' : row.cri >= 40 ? 'ACT' : 'URGENT') : 'GOOD'
   return (<div className="wrap"><section>
     <p className="eyebrow">Live monitor · simulated stream</p>
     <h1 style={{ fontSize: 38, margin: '8px 0' }}>Live, right now.</h1>
-    <p className="muted">This is a <b style={{ color: '#e8ecf4' }}>simulated</b> live stream — it moves around {base ? base.callsign : 'the crew'}'s last stored heart rate ({base ? base.latest.heart_rate : '…'} bpm, Sol {base ? base.latest.sol : '…'}) so judges can see the monitor working. It is labelled simulated, and it never pretends to be a real sensor.</p>
+    <p className="muted">This is a <b style={{ color: '#e8ecf4' }}>simulated</b> live stream — it steps through ORBIT (C002)'s 8 stored Sols from the API, one every 2 seconds, so judges can see the monitor moving. Every number is a stored row, never invented. It never pretends to be a real sensor.</p>
+    {error && <div className="err"><h3>Live stream unavailable</h3><p className="small muted">{error}</p></div>}
     <div className="grid g3">
-      <div className="card kpi"><span>Heart rate · live</span><b style={{ color: '#2dd4bf' }}>{hr === null ? '…' : hr + ' bpm'}</b><span>Updated {tick} times · every 2 s</span></div>
-      <div className="card kpi"><span>SpO2 · live</span><b>{base ? base.latest.spo2 + '%' : '…'}</b><span>Simulated · from last stored value</span></div>
-      <div className="card kpi"><span>Crew member</span><b>{base ? base.callsign : '…'}</b><span>{base ? base.role : 'Loading…'}</span></div>
+      <div className="card kpi"><span>Heart rate · live</span><b style={{ color: '#2dd4bf' }}>{row ? <><AnimatedNumber value={row.heart_rate} /> bpm</> : '…'}</b><span>Now showing Sol {row ? row.sol : '…'} · tick {tick} · every 2 s</span></div>
+      <div className="card kpi"><span>SpO2 · live</span><b>{row ? <><AnimatedNumber value={row.spo2} />%</> : '…'}</b><span>Stored value, Sol {row ? row.sol : '…'}</span></div>
+      <div className="card kpi"><span>CRI · live</span><b style={{ color: BAND_COLOR[band] }}>{row ? <AnimatedNumber value={row.cri} decimals={1} /> : '…'}</b><span><Badge band={band} /> · Sol {row ? row.sol : '…'}</span></div>
+    </div>
+    <div className="grid g3" style={{ marginTop: 16 }}>
+      <div className="card kpi"><span>HRV · live</span><b>{row ? <><AnimatedNumber value={row.hrv_ms} /> ms</> : '…'}</b><span>Stored value, Sol {row ? row.sol : '…'}</span></div>
+      <div className="card kpi"><span>Sleep · that Sol</span><b>{row ? row.sleep_hours + ' h' : '…'}</b><span>Stored value, Sol {row ? row.sol : '…'}</span></div>
+      <div className="card kpi"><span>Radiation · that Sol</span><b>{row ? row.radiation_mgy + ' mGy' : '…'}</b><span>Simulated dose, Sol {row ? row.sol : '…'}</span></div>
     </div>
     <div className="card" style={{ marginTop: 16 }}>
       <h3>What a real sensor would add</h3>
@@ -564,14 +693,14 @@ function Copilot() {
     <p className="eyebrow">Copilot · cached offline answers</p>
     <h1 style={{ fontSize: 38, margin: '8px 0' }}>Ask. Get a straight answer.</h1>
     <p className="muted">These answers are <b style={{ color: '#e8ecf4' }}>cached and written by the team</b> — not a live AI. No API key, no fake "AI is thinking" spinner, no invented facts. Every answer comes from the data on this site.</p>
-    <div style={{ marginTop: 18 }}>
+    <Reveal><div style={{ marginTop: 18 }}>
       {COPILOT_QA.map(([q, a], i) => (
         <div key={i} className="card" style={{ marginBottom: 10, cursor: 'pointer' }} onClick={() => setOpen(open === i ? -1 : i)}>
           <b>{q}</b>
           {open === i && <p className="small muted" style={{ margin: '8px 0 0' }}>{a}</p>}
         </div>
       ))}
-    </div>
+    </div></Reveal>
   </section></div>)
 }
 
@@ -579,7 +708,7 @@ function DataMethod() {
   return (<div className="wrap"><section>
     <p className="eyebrow">Data &amp; method · read this first</p>
     <h1 style={{ fontSize: 38, margin: '8px 0' }}>What is real. What is not. What AI did.</h1>
-    <div className="grid g2">
+    <Reveal><div className="grid g2">
       <div className="card" style={{ borderColor: 'rgba(52,211,153,.4)' }}>
         <h3>Real — NASA OSD-575</h3>
         <p className="small muted">Open Science Data Repository, study OSD-575, Version 3. HDCVD9 immune panel, 4 crew (C001–C004), 28 samples, 9 analytes, 252 values. Verified in this project: CRP L-3 to R+1 — C001 +107.3%, C003 +95.2%, C002 −22.2%, C004 +28.8%. C002: 8 of 9 analytes fell over 50% at R+1.</p>
@@ -589,7 +718,7 @@ function DataMethod() {
         <h3>Synthetic — labelled everywhere</h3>
         <p className="small muted">Daily vitals, Sol 140–147 (heart rate, HRV, SpO2, sleep, mood, reaction time, temperature, radiation dose). OSD-575 contains no daily sleep, heart-rate, HRV, exercise or mood time series, so these streams are generated and labelled synthetic on every screen, in the API, and in the data files. CRI 82 → 61 (Sol 140–142, C002) matches the working range from the first Orbit Mafia build.</p>
       </div>
-    </div>
+    </div></Reveal>
     <div className="card" style={{ marginTop: 16 }}>
       <h3>AI declaration (Space Apps rules)</h3>
       <ul className="small muted" style={{ lineHeight: 1.9 }}>
@@ -628,7 +757,8 @@ function App() {
       <HealthStatus />
       <span className="pill" style={{ whiteSpace: 'nowrap' }}>SOL 147</span>
     </div></div>
-    <main>
+    <main key={route}>
+    <div className="page-enter"><ErrorBoundary key={route}>
       {route === 'home' && <Home />}
       {route === 'dashboard' && <Dashboard />}
       {route === 'crew' && (param ? <Detail id={param} /> : <CrewBoard />)}
@@ -640,6 +770,7 @@ function App() {
       {route === 'live' && <Live />}
       {route === 'copilot' && <Copilot />}
       {route === 'data' && <DataMethod />}
+    </ErrorBoundary></div>
     </main>
     <footer className="footer"><div className="wrap">
       <b style={{ color: '#e8ecf4' }}>ORBIT MAFIA 2.0</b> — NASA Space Apps Challenge 2026, Challenge #5: Create Health Monitoring Software for Astronauts.<br />

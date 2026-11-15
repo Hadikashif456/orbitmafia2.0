@@ -112,7 +112,114 @@ R+1 lab crash.
 - Render + Vercel deployment (no accounts/credentials available in this session).
 - Full click-through in a real browser / on his phone (build + dev-server + API checks passed; visual phone check still to do by Hadi).
 
-## Not yet verified live (needs Hadi)
+---
 
-- Render + Vercel deployment (no accounts/credentials available in this session).
-- Full click-through in a real browser (build + preview HTTP checks passed; visual check on phone still to do by Hadi).
+# FIX — 2026-11-15 ~11:35 PKT: blank Alerts page + "CRI is stuck" + Cyera scroll animation
+
+Hadi's report: `localhost:5173/#/alerts` rendered COMPLETELY BLANK (only the
+purple grid, no header/nav), and CRI felt stuck everywhere. Plus the
+animation ask, pinned to the exact reference: http://secure-the-unknown.cyera.com/
+— scroll-triggered animation, smooth, no lag.
+
+## Cause 1 (blank Alerts page) — a misplaced `.catch()` — CONFIRMED by a real DOM render
+`AlertsPage` had:
+`Promise.all(data.crew.map(c => api(...).then(...)).catch(() => []))`
+The `.catch()` sat on the ARRAY returned by `.map()`, not on the promise —
+`Array.prototype.catch` does not exist — so the moment the crew API returned,
+the effect threw `TypeError: data.crew.map(...).catch is not a function` and
+React unmounted the whole app (header and nav included). That is exactly the
+screenshot: purple grid, nothing else.
+Fix: the effect was rewritten with async/await so the grouping cannot be
+misread; `(a.actions || [])` and a colour fallback were also added to the
+alert render. The parent agent's first theory (an unguarded
+`labs.data.per_crew.C002` at line 458) was CHECKED and is WRONG: line 456
+already guards it with `labs.data &&`, and the live `/labs/summary` returns
+all four crews with CRP objects. The `.catch()` was the crash.
+Fix 2 (defence in depth): a React `ErrorBoundary` now wraps the route switch
+— one bad page can never blank the whole app again; the header/nav stay and
+the user gets a plain error message + a way home.
+
+## Cause 2 ("CRI is stuck") — CRI never moved, and never looked like it moved
+- Every page fetched once on mount and never re-fetched. Fixed: `useApi`
+  now supports polling (`pollMs: 30000` on Dashboard/Crew/Detail) and a
+  manual `refresh()`; every fetch shows "Updated HH:MM:SS" + a
+  ↻ Refresh data button, so a stuck state is visible and fixable. The header
+  status pill re-checks `/health/deps` every 15 s (LIVE flips to OFFLINE and
+  back on its own).
+- The gauge and every big number snapped instantly to the new value with no
+  motion. Fixed: new `useCountUp`/`AnimatedNumber` (requestAnimationFrame
+  tween, ~650 ms ease-out) on the Gauge arc + number and on all CRI/KPI
+  numbers; HBar fills now grow via `transform: scaleX` (compositor-only).
+- Live Monitor faked movement with `Math.random()` and showed no CRI at all.
+  Fixed: it now steps through C002's 8 stored Sols from
+  `/api/v1/crew/C002/trend`, one every 2 s, looping — every value is a stored
+  API row (HR, HRV, SpO2, CRI, sleep, radiation), no random numbers.
+- Replay slider was wired but its numbers changed with no visible motion.
+  Fixed: animated frame numbers + a big "ORBIT · C002 — CRI on Sol X" focus
+  readout + touch-friendly ‹ Prev / Next › Sol buttons (slider pauses play).
+- Check-in sliders did recompute CRI, but the gauge gave no feedback.
+  Fixed: the gauge now counts up on every slider move, and a live line names
+  the biggest drag ("Biggest drag right now: Sleep −18.0 pts — move that
+  slider and watch CRI climb").
+
+## Animation — Cyera scroll feel, smooth, no lag (performance is the requirement)
+Studied first: overworldaudio.com (black entry gate, glowing concentric-ring
+sigil, huge staggered type, cinematic calm) and secure-the-unknown.cyera.com
+via mesh3d/Threads walkthroughs (WebGL purple world, capsule drifting
+through scenes as you scroll, "Begin Your Mission"). Replicated the FEEL with
+our own hand-written CSS/JS — no copied code, assets or brand marks:
+- Scroll reveal via ONE IntersectionObserver (threshold 0.08, rootMargin
+  `0px 0px 60px 0px` so elements reveal just before they scroll in — feels
+  instant on touch scroll); staggered card grids; hero entrance in staggered
+  lines; marquee strip; page-transition fade on every navigation.
+- Perf rules enforced (see the audit below): transform/opacity-only
+  animation — the old `.reveal` blur, `backdrop-filter` on the sticky topbar
+  and cards, `background-attachment:fixed` on the body, and the
+  background-position gradient shimmer were ALL REMOVED (each repaints every
+  scroll frame on phones). The glow orbs now get their soft edge from a
+  radial gradient instead of `filter:blur(46px)`, so drifting them is
+  transform-only. Zero scroll listeners in the code (only the observer).
+- Phone-first: bigger range thumbs (28 px), no hover-only behaviour
+  (hover lifts are inside `@media (hover:hover)`), `prefers-reduced-motion`
+  disables all motion.
+
+## Verification — DOM render harness (jsdom + real Vite dev proxy + real backend)
+Harness: `/tmp/om2-test/harness.cjs` + `interact.cjs` (bundles `src/main.jsx`
+with esbuild, mounts it in a real DOM, fetches through the Vite dev server
+on :5173, which proxies `/api` to the live uvicorn backend on :8000).
+- BEFORE the fix, the harness reproduced the crash exactly:
+  `TypeError: data.crew.map(...).catch is not a function` → process died,
+  root unmounted (the blank page).
+- AFTER the fix — `#/alerts`: root renders (6,244 chars), topbar + LIVE pill
+  present, lab banner present, all 5 alerts present (CRP up, immune markers
+  fell, Sleep only), ERRORS []. `#/dashboard`: CRP strip + "Updated
+  HH:MM:SS" + Refresh button, ERRORS []. `#/crew/C002`: real lab table,
+  ERRORS [].
+- Replay interaction — set the slider to 144 in the DOM: CRI **47.9** shows,
+  "Sol 144" shows, ERRORS [].
+- Check-in interaction — dragged the sleep slider to 4 h: CRI **98.3 → 80.3**,
+  "Biggest drag right now: Sleep −18.0 pts" shows, ERRORS [].
+- Live interaction — waited 5 s: tick **3**, now showing **Sol 143** (stepped
+  140 → 141 → 142 → 143), CRI label present, ERRORS [].
+- C002 CRI per Sol, re-verified live from `/api/v1/crew/C002/trend`:
+  140 → 79.8, 141 → 73.4, 142 → 61.7, 143 → 61.7, 144 → 47.9,
+  145 → 73.4, 146 → 79.8, 147 → 79.8. `/crew/C002/cri`:
+  cri 79.8, recomputed 79.8, `formula_matches_stored: true`.
+- Perf audit — `/tmp/om2-test/perf-audit.cjs` (pure Node, no deps):
+  **ALL PERF CHECKS PASSED** — 13/13 keyframes transform/opacity only
+  (drawLine is stroke-dashoffset, one-shot), all infinite animations
+  transform/opacity only, 0 filter:blur, 0 backdrop-filter,
+  0 background-attachment:fixed, 0 scroll listeners, 2 IntersectionObserver
+  references, no layout/paint properties inside keyframes.
+- `cd backend && .venv/bin/python -m pytest test_app.py -q` → **11 passed**.
+- `cd frontend && npm run build` → success, CSS 13.44 kB, JS 197.44 kB
+  (61.18 kB gzip). Still light: no new dependencies.
+- `frontend/public/snapshot.json` regenerated from the live API (31 keys) —
+  now includes the previously missing `/api/v1/labs/summary` and
+  `/api/v1/health/deps`, so the labelled offline snapshot works on every page.
+
+## Still not verified live (needs Hadi)
+- Real-browser/phone tap-through + scroll feel on his phone (jsdom tests
+  prove the render, the interactions and the perf structure; the feel of the
+  scroll on a real phone is the last check).
+- Render + Vercel deployment (no accounts in this session).
