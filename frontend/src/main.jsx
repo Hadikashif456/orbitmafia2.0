@@ -41,6 +41,10 @@ function useHash() {
 }
 const go = p => { window.location.hash = '#/' + p }
 const NAV = [['home','Home'],['dashboard','Dashboard'],['crew','Crew'],['replay','Mission Replay'],['recovery','Recovery'],['drivers','CRI Drivers'],['alerts','Alerts'],['checkin','Daily Check-in'],['live','Live Monitor'],['copilot','Copilot'],['data','Data & Method']]
+/* Top bar shows the first 6 links inline; the rest live under a "More" menu
+   on desktop and a hamburger menu on phone — 11 links never fit one row. */
+const PRIMARY_NAV = NAV.slice(0, 6)
+const MORE_NAV = NAV.slice(6)
 
 /* ---------- data hook: errors shown loudly, never silent mock ----------
    Fetches once on mount, then re-fetches on a timer (pollMs) and on demand
@@ -112,7 +116,7 @@ function HealthStatus() {
   }, [])
   if (!s) return <span className="status-pill"><span className="status-dot" style={{ background: '#7d6a92', boxShadow: 'none', animation: 'none' }} />CHECKING…</span>
   return s.live
-    ? <span className="status-pill live-pulse" style={{ color: '#34d399', borderColor: 'rgba(52,211,153,.5)' }} title={s.at ? 'Last checked ' + s.at.toLocaleTimeString('en-GB') : ''}><span className="status-dot" />LIVE · {s.bio} LABS · {s.daily} DAILY</span>
+    ? <span className="status-pill live-pulse" style={{ color: '#34d399', borderColor: 'rgba(52,211,153,.5)' }} title={s.at ? 'Last checked ' + s.at.toLocaleTimeString('en-GB') : ''}><span className="status-dot" />LIVE<span className="status-counts"> · {s.bio} LABS · {s.daily} DAILY</span></span>
     : <span className="status-pill" style={{ color: '#f87171', borderColor: 'rgba(248,113,113,.5)' }}><span className="status-dot off" />OFFLINE</span>
 }
 
@@ -618,7 +622,7 @@ function CheckIn() {
     <p className="eyebrow">Daily check-in · 2 minutes</p>
     <h1 style={{ fontSize: 38, margin: '8px 0' }}>How are you today?</h1>
     <p className="muted">Your CRI updates live as you move the sliders. Nothing leaves this device — check-ins are stored in your browser only.</p>
-    <div className="grid g2">
+    <Reveal><div className="grid g2">
       <div className="card">
         <label>Sleep last night — {f.sleep} h</label><input type="range" min="3" max="10" step="0.5" value={f.sleep} onChange={set('sleep')} />
         <label>Mood — {f.mood} / 10</label><input type="range" min="1" max="10" step="1" value={f.mood} onChange={set('mood')} />
@@ -643,7 +647,7 @@ function CheckIn() {
           {saved.slice(0, 5).map((s, i) => <p key={i} className="small">{s.date} — CRI <b>{s.cri}</b> ({s.band}) · sleep {s.sleep}h · mood {s.mood}/10</p>)}
         </div>}
       </div>
-    </div>
+    </div></Reveal>
   </section></div>)
 }
 
@@ -669,20 +673,20 @@ function Live() {
     <h1 style={{ fontSize: 38, margin: '8px 0' }}>Live, right now.</h1>
     <p className="muted">This is a <b style={{ color: '#e8ecf4' }}>simulated</b> live stream — it steps through ORBIT (C002)'s 8 stored Sols from the API, one every 2 seconds, so judges can see the monitor moving. Every number is a stored row, never invented. It never pretends to be a real sensor.</p>
     {error && <div className="err"><h3>Live stream unavailable</h3><p className="small muted">{error}</p></div>}
-    <div className="grid g3">
+    <Reveal><div className="grid g3">
       <div className="card kpi"><span>Heart rate · live</span><b style={{ color: '#2dd4bf' }}>{row ? <><AnimatedNumber value={row.heart_rate} /> bpm</> : '…'}</b><span>Now showing Sol {row ? row.sol : '…'} · tick {tick} · every 2 s</span></div>
       <div className="card kpi"><span>SpO2 · live</span><b>{row ? <><AnimatedNumber value={row.spo2} />%</> : '…'}</b><span>Stored value, Sol {row ? row.sol : '…'}</span></div>
       <div className="card kpi"><span>CRI · live</span><b style={{ color: BAND_COLOR[band] }}>{row ? <AnimatedNumber value={row.cri} decimals={1} /> : '…'}</b><span><Badge band={band} /> · Sol {row ? row.sol : '…'}</span></div>
-    </div>
-    <div className="grid g3" style={{ marginTop: 16 }}>
+    </div></Reveal>
+    <Reveal delay={0.08}><div className="grid g3" style={{ marginTop: 16 }}>
       <div className="card kpi"><span>HRV · live</span><b>{row ? <><AnimatedNumber value={row.hrv_ms} /> ms</> : '…'}</b><span>Stored value, Sol {row ? row.sol : '…'}</span></div>
       <div className="card kpi"><span>Sleep · that Sol</span><b>{row ? row.sleep_hours + ' h' : '…'}</b><span>Stored value, Sol {row ? row.sol : '…'}</span></div>
       <div className="card kpi"><span>Radiation · that Sol</span><b>{row ? row.radiation_mgy + ' mGy' : '…'}</b><span>Simulated dose, Sol {row ? row.sol : '…'}</span></div>
-    </div>
-    <div className="card" style={{ marginTop: 16 }}>
+    </div></Reveal>
+    <Reveal delay={0.16}><div className="card" style={{ marginTop: 16 }}>
       <h3>What a real sensor would add</h3>
       <p className="small muted">Bluetooth heart-rate straps, pulse oximeters and BP cuffs (standard BLE profiles) would replace this simulated stream one-for-one — same page, same alerts, same CRI. The triage engine does not care where a number came from, only whether it is labelled.</p>
-    </div>
+    </div></Reveal>
   </section></div>)
 }
 
@@ -758,16 +762,33 @@ function DataMethod() {
 function App() {
   const h = useHash()
   const [route, param] = h.split('/')
+  const [menuOpen, setMenuOpen] = useState(false)
+  useEffect(() => { setMenuOpen(false) }, [h]) // navigating anywhere closes the menu
+  const moreActive = MORE_NAV.some(([r]) => r === route)
   return (<>
     <div className="scroll-progress" aria-hidden="true" />
     <div className="topbar"><div className="wrap topbar-inner">
       <a className="logo" href="#/home" style={{ textDecoration: 'none' }}>ORBIT <b>MAFIA</b> <span className="mono" style={{ color: '#6b7488', fontSize: 12 }}>2.0</span></a>
-      <nav className="nav">{NAV.map(([r, label]) => (
+      <nav className="nav">{PRIMARY_NAV.map(([r, label]) => (
         <a key={r} href={'#/' + r} className={route === r ? 'active' : ''}>{label}</a>
-      ))}</nav>
+      ))}
+        <span className="more-wrap">
+          <button className={moreActive ? 'more-btn active' : 'more-btn'} onClick={() => setMenuOpen(o => !o)} aria-expanded={menuOpen} aria-haspopup="true">More ▾</button>
+          {menuOpen && <div className="more-menu">{MORE_NAV.map(([r, label]) => (
+            <a key={r} href={'#/' + r} className={route === r ? 'active' : ''} onClick={() => setMenuOpen(false)}>{label}</a>
+          ))}</div>}
+        </span>
+      </nav>
       <HealthStatus />
-      <span className="pill" style={{ whiteSpace: 'nowrap' }}>SOL 147</span>
-    </div></div>
+      <span className="pill sol-pill" style={{ whiteSpace: 'nowrap' }}>SOL 147</span>
+      <button className="menu-btn" onClick={() => setMenuOpen(o => !o)} aria-expanded={menuOpen} aria-label="Menu">☰ Menu</button>
+    </div>
+    <div className={menuOpen ? 'mobile-menu open' : 'mobile-menu'}>{NAV.map(([r, label]) => (
+      <a key={r} href={'#/' + r} className={route === r ? 'active' : ''} onClick={() => setMenuOpen(false)}>{label}</a>
+    ))}</div>
+    </div>
+    {/* overlay sits OUTSIDE the topbar: topbar (z-50) and its dropdown paint above it, page clicks below it close the menu */}
+    <div className={menuOpen ? 'menu-overlay open' : 'menu-overlay'} onClick={() => setMenuOpen(false)} aria-hidden="true" />
     <main key={route}>
     <div className="page-enter"><ErrorBoundary key={route}>
       {route === 'home' && <Home />}
