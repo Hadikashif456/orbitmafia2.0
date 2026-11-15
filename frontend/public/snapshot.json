@@ -1,0 +1,5629 @@
+{
+ "/api/v1/crew": {
+  "crew": [
+   {
+    "id": "C001",
+    "name": "Crew C001",
+    "callsign": "ASTRA",
+    "role": "Commander",
+    "age": 44,
+    "color": "#2dd4bf",
+    "notes": "Highest CRP surge after landing (+107.3%). Steady recovery.",
+    "latest_sol": 147,
+    "cri": 99.0,
+    "cri_band": "EXCELLENT",
+    "latest": {
+     "id": 8,
+     "crew_id": "C001",
+     "sol": 147,
+     "heart_rate": 68.0,
+     "hrv_ms": 62.0,
+     "spo2": 98.0,
+     "sleep_hours": 7.2,
+     "mood": 7,
+     "reaction_ms": 265.0,
+     "temp_c": 36.8,
+     "systolic": 118.0,
+     "diastolic": 76.0,
+     "radiation_mgy": 0.42,
+     "exercise_min": 45.0,
+     "body_mass_kg": 77.9,
+     "cri": 99.0
+    }
+   },
+   {
+    "id": "C002",
+    "name": "Crew C002",
+    "callsign": "ORBIT",
+    "role": "Crew Medical Officer",
+    "age": 49,
+    "color": "#f59e0b",
+    "notes": "Lowest CRI in the crew. 8 of 9 immune markers fell over 50% at R+1. Needs the most support.",
+    "latest_sol": 147,
+    "cri": 79.8,
+    "cri_band": "GOOD",
+    "latest": {
+     "id": 16,
+     "crew_id": "C002",
+     "sol": 147,
+     "heart_rate": 72.0,
+     "hrv_ms": 46.0,
+     "spo2": 97.0,
+     "sleep_hours": 5.9,
+     "mood": 5,
+     "reaction_ms": 300.0,
+     "temp_c": 37.0,
+     "systolic": 118.0,
+     "diastolic": 76.0,
+     "radiation_mgy": 0.42,
+     "exercise_min": 45.0,
+     "body_mass_kg": 82.2,
+     "cri": 79.8
+    }
+   },
+   {
+    "id": "C003",
+    "name": "Crew C003",
+    "callsign": "NOVA",
+    "role": "Mission Specialist",
+    "age": 36,
+    "color": "#f472b6",
+    "notes": "CRP up 95.2% at R+1. Sleep is the main drag on CRI.",
+    "latest_sol": 147,
+    "cri": 96.3,
+    "cri_band": "EXCELLENT",
+    "latest": {
+     "id": 24,
+     "crew_id": "C003",
+     "sol": 147,
+     "heart_rate": 66.0,
+     "hrv_ms": 58.0,
+     "spo2": 98.0,
+     "sleep_hours": 6.8,
+     "mood": 7,
+     "reaction_ms": 270.0,
+     "temp_c": 36.7,
+     "systolic": 118.0,
+     "diastolic": 76.0,
+     "radiation_mgy": 0.42,
+     "exercise_min": 45.0,
+     "body_mass_kg": 63.7,
+     "cri": 96.3
+    }
+   },
+   {
+    "id": "C004",
+    "name": "Crew C004",
+    "callsign": "ATLAS",
+    "role": "Pilot / Flight Engineer",
+    "age": 41,
+    "color": "#a78bfa",
+    "notes": "Most stable recovery. Smallest CRP rise (+28.8%).",
+    "latest_sol": 147,
+    "cri": 96.5,
+    "cri_band": "EXCELLENT",
+    "latest": {
+     "id": 32,
+     "crew_id": "C004",
+     "sol": 147,
+     "heart_rate": 70.0,
+     "hrv_ms": 55.0,
+     "spo2": 98.0,
+     "sleep_hours": 7.0,
+     "mood": 8,
+     "reaction_ms": 260.0,
+     "temp_c": 36.8,
+     "systolic": 118.0,
+     "diastolic": 76.0,
+     "radiation_mgy": 0.42,
+     "exercise_min": 45.0,
+     "body_mass_kg": 74.5,
+     "cri": 96.5
+    }
+   }
+  ],
+  "mission": "Mars Transit \u2014 Sol 140-147",
+  "data_note": "Daily vitals are labelled synthetic; biomarkers are real OSD-575."
+ },
+ "/api/v1/mission/replay": {
+  "mission": "Mars Transit",
+  "sols": [
+   140,
+   141,
+   142,
+   143,
+   144,
+   145,
+   146,
+   147
+  ],
+  "events": [
+   {
+    "sol": 140,
+    "title": "Baseline day",
+    "detail": "All four crew in the green. CRI 80-99."
+   },
+   {
+    "sol": 141,
+    "title": "Sleep deficit begins",
+    "detail": "C002 sleeps under 6h. HRV starts to fall across the crew."
+   },
+   {
+    "sol": 142,
+    "title": "CRI low point",
+    "detail": "C002 CRI falls to 61.7. Recovery plan starts."
+   },
+   {
+    "sol": 143,
+    "title": "Contingency EVA",
+    "detail": "C003 + C004 outside for 3h 20m. SpO2 and heart rate watched live."
+   },
+   {
+    "sol": 144,
+    "title": "Solar particle event",
+    "detail": "Radiation dose jumps to 1.32 mGy. Crew shelters in the shielded area. All-clear after 9 hours."
+   },
+   {
+    "sol": 145,
+    "title": "Recovery day 1",
+    "detail": "Sleep protected, exercise cut. CRI climbs back for every crew member."
+   },
+   {
+    "sol": 146,
+    "title": "Recovery day 2",
+    "detail": "HRV recovering. C002 back to 79.8."
+   },
+   {
+    "sol": 147,
+    "title": "Back to green",
+    "detail": "Whole crew GOOD or better. Mission summary ready for Ground."
+   }
+  ],
+  "frames": [
+   {
+    "sol": 140,
+    "crew": [
+     {
+      "id": 1,
+      "crew_id": "C001",
+      "sol": 140,
+      "heart_rate": 68.0,
+      "hrv_ms": 62.0,
+      "spo2": 98.0,
+      "sleep_hours": 7.2,
+      "mood": 7,
+      "reaction_ms": 265.0,
+      "temp_c": 36.8,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 78.2,
+      "cri": 99.0
+     },
+     {
+      "id": 9,
+      "crew_id": "C002",
+      "sol": 140,
+      "heart_rate": 72.0,
+      "hrv_ms": 46.0,
+      "spo2": 97.0,
+      "sleep_hours": 5.9,
+      "mood": 5,
+      "reaction_ms": 300.0,
+      "temp_c": 37.0,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 82.5,
+      "cri": 79.8
+     },
+     {
+      "id": 17,
+      "crew_id": "C003",
+      "sol": 140,
+      "heart_rate": 66.0,
+      "hrv_ms": 58.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.8,
+      "mood": 7,
+      "reaction_ms": 270.0,
+      "temp_c": 36.7,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 64.0,
+      "cri": 96.3
+     },
+     {
+      "id": 25,
+      "crew_id": "C004",
+      "sol": 140,
+      "heart_rate": 70.0,
+      "hrv_ms": 55.0,
+      "spo2": 98.0,
+      "sleep_hours": 7.0,
+      "mood": 8,
+      "reaction_ms": 260.0,
+      "temp_c": 36.8,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 74.8,
+      "cri": 96.5
+     }
+    ]
+   },
+   {
+    "sol": 141,
+    "crew": [
+     {
+      "id": 2,
+      "crew_id": "C001",
+      "sol": 141,
+      "heart_rate": 71.0,
+      "hrv_ms": 55.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.7,
+      "mood": 7,
+      "reaction_ms": 283.0,
+      "temp_c": 36.9,
+      "systolic": 121.0,
+      "diastolic": 78.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 35.0,
+      "body_mass_kg": 78.2,
+      "cri": 94.5
+     },
+     {
+      "id": 10,
+      "crew_id": "C002",
+      "sol": 141,
+      "heart_rate": 75.0,
+      "hrv_ms": 39.0,
+      "spo2": 97.0,
+      "sleep_hours": 5.4,
+      "mood": 5,
+      "reaction_ms": 318.0,
+      "temp_c": 37.1,
+      "systolic": 121.0,
+      "diastolic": 78.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 35.0,
+      "body_mass_kg": 82.5,
+      "cri": 73.4
+     },
+     {
+      "id": 18,
+      "crew_id": "C003",
+      "sol": 141,
+      "heart_rate": 69.0,
+      "hrv_ms": 51.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.3,
+      "mood": 7,
+      "reaction_ms": 288.0,
+      "temp_c": 36.8,
+      "systolic": 121.0,
+      "diastolic": 78.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 35.0,
+      "body_mass_kg": 64.0,
+      "cri": 90.5
+     },
+     {
+      "id": 26,
+      "crew_id": "C004",
+      "sol": 141,
+      "heart_rate": 73.0,
+      "hrv_ms": 48.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.5,
+      "mood": 8,
+      "reaction_ms": 278.0,
+      "temp_c": 36.9,
+      "systolic": 121.0,
+      "diastolic": 78.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 35.0,
+      "body_mass_kg": 74.8,
+      "cri": 91.0
+     }
+    ]
+   },
+   {
+    "sol": 142,
+    "crew": [
+     {
+      "id": 3,
+      "crew_id": "C001",
+      "sol": 142,
+      "heart_rate": 74.0,
+      "hrv_ms": 48.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.2,
+      "mood": 6,
+      "reaction_ms": 301.0,
+      "temp_c": 37.0,
+      "systolic": 124.0,
+      "diastolic": 80.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 25.0,
+      "body_mass_kg": 78.2,
+      "cri": 85.2
+     },
+     {
+      "id": 11,
+      "crew_id": "C002",
+      "sol": 142,
+      "heart_rate": 78.0,
+      "hrv_ms": 32.0,
+      "spo2": 97.0,
+      "sleep_hours": 4.9,
+      "mood": 4,
+      "reaction_ms": 336.0,
+      "temp_c": 37.2,
+      "systolic": 124.0,
+      "diastolic": 80.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 25.0,
+      "body_mass_kg": 82.5,
+      "cri": 61.7
+     },
+     {
+      "id": 19,
+      "crew_id": "C003",
+      "sol": 142,
+      "heart_rate": 72.0,
+      "hrv_ms": 44.0,
+      "spo2": 98.0,
+      "sleep_hours": 5.8,
+      "mood": 6,
+      "reaction_ms": 306.0,
+      "temp_c": 36.9,
+      "systolic": 124.0,
+      "diastolic": 80.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 25.0,
+      "body_mass_kg": 64.0,
+      "cri": 81.2
+     },
+     {
+      "id": 27,
+      "crew_id": "C004",
+      "sol": 142,
+      "heart_rate": 76.0,
+      "hrv_ms": 41.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.0,
+      "mood": 7,
+      "reaction_ms": 296.0,
+      "temp_c": 37.0,
+      "systolic": 124.0,
+      "diastolic": 80.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 25.0,
+      "body_mass_kg": 74.8,
+      "cri": 84.0
+     }
+    ]
+   },
+   {
+    "sol": 143,
+    "crew": [
+     {
+      "id": 4,
+      "crew_id": "C001",
+      "sol": 143,
+      "heart_rate": 74.0,
+      "hrv_ms": 48.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.2,
+      "mood": 6,
+      "reaction_ms": 301.0,
+      "temp_c": 37.0,
+      "systolic": 124.0,
+      "diastolic": 80.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 25.0,
+      "body_mass_kg": 78.2,
+      "cri": 85.2
+     },
+     {
+      "id": 12,
+      "crew_id": "C002",
+      "sol": 143,
+      "heart_rate": 78.0,
+      "hrv_ms": 32.0,
+      "spo2": 97.0,
+      "sleep_hours": 4.9,
+      "mood": 4,
+      "reaction_ms": 336.0,
+      "temp_c": 37.2,
+      "systolic": 124.0,
+      "diastolic": 80.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 25.0,
+      "body_mass_kg": 82.5,
+      "cri": 61.7
+     },
+     {
+      "id": 20,
+      "crew_id": "C003",
+      "sol": 143,
+      "heart_rate": 72.0,
+      "hrv_ms": 44.0,
+      "spo2": 98.0,
+      "sleep_hours": 5.8,
+      "mood": 6,
+      "reaction_ms": 306.0,
+      "temp_c": 36.9,
+      "systolic": 124.0,
+      "diastolic": 80.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 25.0,
+      "body_mass_kg": 64.0,
+      "cri": 81.2
+     },
+     {
+      "id": 28,
+      "crew_id": "C004",
+      "sol": 143,
+      "heart_rate": 76.0,
+      "hrv_ms": 41.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.0,
+      "mood": 7,
+      "reaction_ms": 296.0,
+      "temp_c": 37.0,
+      "systolic": 124.0,
+      "diastolic": 80.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 25.0,
+      "body_mass_kg": 74.8,
+      "cri": 84.0
+     }
+    ]
+   },
+   {
+    "sol": 144,
+    "crew": [
+     {
+      "id": 5,
+      "crew_id": "C001",
+      "sol": 144,
+      "heart_rate": 77.0,
+      "hrv_ms": 41.0,
+      "spo2": 97.0,
+      "sleep_hours": 5.7,
+      "mood": 6,
+      "reaction_ms": 319.0,
+      "temp_c": 37.2,
+      "systolic": 127.0,
+      "diastolic": 82.0,
+      "radiation_mgy": 1.32,
+      "exercise_min": 15.0,
+      "body_mass_kg": 78.2,
+      "cri": 77.2
+     },
+     {
+      "id": 13,
+      "crew_id": "C002",
+      "sol": 144,
+      "heart_rate": 81.0,
+      "hrv_ms": 25.0,
+      "spo2": 96.0,
+      "sleep_hours": 4.4,
+      "mood": 4,
+      "reaction_ms": 354.0,
+      "temp_c": 37.4,
+      "systolic": 127.0,
+      "diastolic": 82.0,
+      "radiation_mgy": 1.32,
+      "exercise_min": 15.0,
+      "body_mass_kg": 82.5,
+      "cri": 47.9
+     },
+     {
+      "id": 21,
+      "crew_id": "C003",
+      "sol": 144,
+      "heart_rate": 75.0,
+      "hrv_ms": 37.0,
+      "spo2": 97.0,
+      "sleep_hours": 5.3,
+      "mood": 6,
+      "reaction_ms": 324.0,
+      "temp_c": 37.1,
+      "systolic": 127.0,
+      "diastolic": 82.0,
+      "radiation_mgy": 1.32,
+      "exercise_min": 15.0,
+      "body_mass_kg": 64.0,
+      "cri": 74.8
+     },
+     {
+      "id": 29,
+      "crew_id": "C004",
+      "sol": 144,
+      "heart_rate": 79.0,
+      "hrv_ms": 34.0,
+      "spo2": 97.0,
+      "sleep_hours": 5.5,
+      "mood": 7,
+      "reaction_ms": 314.0,
+      "temp_c": 37.2,
+      "systolic": 127.0,
+      "diastolic": 82.0,
+      "radiation_mgy": 1.32,
+      "exercise_min": 15.0,
+      "body_mass_kg": 74.8,
+      "cri": 75.2
+     }
+    ]
+   },
+   {
+    "sol": 145,
+    "crew": [
+     {
+      "id": 6,
+      "crew_id": "C001",
+      "sol": 145,
+      "heart_rate": 71.0,
+      "hrv_ms": 55.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.7,
+      "mood": 7,
+      "reaction_ms": 283.0,
+      "temp_c": 36.9,
+      "systolic": 121.0,
+      "diastolic": 78.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 35.0,
+      "body_mass_kg": 77.9,
+      "cri": 94.5
+     },
+     {
+      "id": 14,
+      "crew_id": "C002",
+      "sol": 145,
+      "heart_rate": 75.0,
+      "hrv_ms": 39.0,
+      "spo2": 97.0,
+      "sleep_hours": 5.4,
+      "mood": 5,
+      "reaction_ms": 318.0,
+      "temp_c": 37.1,
+      "systolic": 121.0,
+      "diastolic": 78.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 35.0,
+      "body_mass_kg": 82.2,
+      "cri": 73.4
+     },
+     {
+      "id": 22,
+      "crew_id": "C003",
+      "sol": 145,
+      "heart_rate": 69.0,
+      "hrv_ms": 51.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.3,
+      "mood": 7,
+      "reaction_ms": 288.0,
+      "temp_c": 36.8,
+      "systolic": 121.0,
+      "diastolic": 78.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 35.0,
+      "body_mass_kg": 63.7,
+      "cri": 90.5
+     },
+     {
+      "id": 30,
+      "crew_id": "C004",
+      "sol": 145,
+      "heart_rate": 73.0,
+      "hrv_ms": 48.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.5,
+      "mood": 8,
+      "reaction_ms": 278.0,
+      "temp_c": 36.9,
+      "systolic": 121.0,
+      "diastolic": 78.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 35.0,
+      "body_mass_kg": 74.5,
+      "cri": 91.0
+     }
+    ]
+   },
+   {
+    "sol": 146,
+    "crew": [
+     {
+      "id": 7,
+      "crew_id": "C001",
+      "sol": 146,
+      "heart_rate": 68.0,
+      "hrv_ms": 62.0,
+      "spo2": 98.0,
+      "sleep_hours": 7.2,
+      "mood": 7,
+      "reaction_ms": 265.0,
+      "temp_c": 36.8,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 77.9,
+      "cri": 99.0
+     },
+     {
+      "id": 15,
+      "crew_id": "C002",
+      "sol": 146,
+      "heart_rate": 72.0,
+      "hrv_ms": 46.0,
+      "spo2": 97.0,
+      "sleep_hours": 5.9,
+      "mood": 5,
+      "reaction_ms": 300.0,
+      "temp_c": 37.0,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 82.2,
+      "cri": 79.8
+     },
+     {
+      "id": 23,
+      "crew_id": "C003",
+      "sol": 146,
+      "heart_rate": 66.0,
+      "hrv_ms": 58.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.8,
+      "mood": 7,
+      "reaction_ms": 270.0,
+      "temp_c": 36.7,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 63.7,
+      "cri": 96.3
+     },
+     {
+      "id": 31,
+      "crew_id": "C004",
+      "sol": 146,
+      "heart_rate": 70.0,
+      "hrv_ms": 55.0,
+      "spo2": 98.0,
+      "sleep_hours": 7.0,
+      "mood": 8,
+      "reaction_ms": 260.0,
+      "temp_c": 36.8,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 74.5,
+      "cri": 96.5
+     }
+    ]
+   },
+   {
+    "sol": 147,
+    "crew": [
+     {
+      "id": 8,
+      "crew_id": "C001",
+      "sol": 147,
+      "heart_rate": 68.0,
+      "hrv_ms": 62.0,
+      "spo2": 98.0,
+      "sleep_hours": 7.2,
+      "mood": 7,
+      "reaction_ms": 265.0,
+      "temp_c": 36.8,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 77.9,
+      "cri": 99.0
+     },
+     {
+      "id": 16,
+      "crew_id": "C002",
+      "sol": 147,
+      "heart_rate": 72.0,
+      "hrv_ms": 46.0,
+      "spo2": 97.0,
+      "sleep_hours": 5.9,
+      "mood": 5,
+      "reaction_ms": 300.0,
+      "temp_c": 37.0,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 82.2,
+      "cri": 79.8
+     },
+     {
+      "id": 24,
+      "crew_id": "C003",
+      "sol": 147,
+      "heart_rate": 66.0,
+      "hrv_ms": 58.0,
+      "spo2": 98.0,
+      "sleep_hours": 6.8,
+      "mood": 7,
+      "reaction_ms": 270.0,
+      "temp_c": 36.7,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 63.7,
+      "cri": 96.3
+     },
+     {
+      "id": 32,
+      "crew_id": "C004",
+      "sol": 147,
+      "heart_rate": 70.0,
+      "hrv_ms": 55.0,
+      "spo2": 98.0,
+      "sleep_hours": 7.0,
+      "mood": 8,
+      "reaction_ms": 260.0,
+      "temp_c": 36.8,
+      "systolic": 118.0,
+      "diastolic": 76.0,
+      "radiation_mgy": 0.42,
+      "exercise_min": 45.0,
+      "body_mass_kg": 74.5,
+      "cri": 96.5
+     }
+    ]
+   }
+  ]
+ },
+ "/api/v1/mission/summary": {
+  "mission": "Mars Transit \u2014 Sol 140-147",
+  "crew": [
+   {
+    "crew_id": "C001",
+    "min_cri": 77.2,
+    "max_cri": 99.0,
+    "avg_cri": 91.7,
+    "latest_cri": 99.0,
+    "alerts": 1
+   },
+   {
+    "crew_id": "C002",
+    "min_cri": 47.9,
+    "max_cri": 79.8,
+    "avg_cri": 69.7,
+    "latest_cri": 79.8,
+    "alerts": 2
+   },
+   {
+    "crew_id": "C003",
+    "min_cri": 74.8,
+    "max_cri": 96.3,
+    "avg_cri": 88.4,
+    "latest_cri": 96.3,
+    "alerts": 1
+   },
+   {
+    "crew_id": "C004",
+    "min_cri": 75.2,
+    "max_cri": 96.5,
+    "avg_cri": 89.3,
+    "latest_cri": 96.5,
+    "alerts": 1
+   }
+  ],
+  "total_alerts": 5,
+  "events": [
+   {
+    "sol": 140,
+    "title": "Baseline day",
+    "detail": "All four crew in the green. CRI 80-99."
+   },
+   {
+    "sol": 141,
+    "title": "Sleep deficit begins",
+    "detail": "C002 sleeps under 6h. HRV starts to fall across the crew."
+   },
+   {
+    "sol": 142,
+    "title": "CRI low point",
+    "detail": "C002 CRI falls to 61.7. Recovery plan starts."
+   },
+   {
+    "sol": 143,
+    "title": "Contingency EVA",
+    "detail": "C003 + C004 outside for 3h 20m. SpO2 and heart rate watched live."
+   },
+   {
+    "sol": 144,
+    "title": "Solar particle event",
+    "detail": "Radiation dose jumps to 1.32 mGy. Crew shelters in the shielded area. All-clear after 9 hours."
+   },
+   {
+    "sol": 145,
+    "title": "Recovery day 1",
+    "detail": "Sleep protected, exercise cut. CRI climbs back for every crew member."
+   },
+   {
+    "sol": 146,
+    "title": "Recovery day 2",
+    "detail": "HRV recovering. C002 back to 79.8."
+   },
+   {
+    "sol": 147,
+    "title": "Back to green",
+    "detail": "Whole crew GOOD or better. Mission summary ready for Ground."
+   }
+  ],
+  "data": {
+   "biomarkers": "Real NASA OSD-575 (252 rows, 9 analytes x 28 samples)",
+   "daily_vitals": "Synthetic, labelled (32 rows, Sol 140-147 x 4 crew)"
+  }
+ },
+ "/api/v1/radiation": {
+  "source": "Synthetic daily dose, labelled. Pattern only \u2014 not real RAD data.",
+  "note": "Vitalis uses real Curiosity RAD data; Orbit Mafia 2.0 does not claim real radiation values and says so here.",
+  "series": [
+   {
+    "sol": 140,
+    "crew_id": "C001",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 140,
+    "crew_id": "C002",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 140,
+    "crew_id": "C003",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 140,
+    "crew_id": "C004",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 141,
+    "crew_id": "C001",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 141,
+    "crew_id": "C002",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 141,
+    "crew_id": "C003",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 141,
+    "crew_id": "C004",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 142,
+    "crew_id": "C001",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 142,
+    "crew_id": "C002",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 142,
+    "crew_id": "C003",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 142,
+    "crew_id": "C004",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 143,
+    "crew_id": "C001",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 143,
+    "crew_id": "C002",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 143,
+    "crew_id": "C003",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 143,
+    "crew_id": "C004",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 144,
+    "crew_id": "C001",
+    "radiation_mgy": 1.32
+   },
+   {
+    "sol": 144,
+    "crew_id": "C002",
+    "radiation_mgy": 1.32
+   },
+   {
+    "sol": 144,
+    "crew_id": "C003",
+    "radiation_mgy": 1.32
+   },
+   {
+    "sol": 144,
+    "crew_id": "C004",
+    "radiation_mgy": 1.32
+   },
+   {
+    "sol": 145,
+    "crew_id": "C001",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 145,
+    "crew_id": "C002",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 145,
+    "crew_id": "C003",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 145,
+    "crew_id": "C004",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 146,
+    "crew_id": "C001",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 146,
+    "crew_id": "C002",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 146,
+    "crew_id": "C003",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 146,
+    "crew_id": "C004",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 147,
+    "crew_id": "C001",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 147,
+    "crew_id": "C002",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 147,
+    "crew_id": "C003",
+    "radiation_mgy": 0.42
+   },
+   {
+    "sol": 147,
+    "crew_id": "C004",
+    "radiation_mgy": 0.42
+   }
+  ]
+ },
+ "/api/v1/crew/C001": {
+  "id": "C001",
+  "name": "Crew C001",
+  "callsign": "ASTRA",
+  "role": "Commander",
+  "age": 44,
+  "color": "#2dd4bf",
+  "notes": "Highest CRP surge after landing (+107.3%). Steady recovery.",
+  "latest": {
+   "id": 8,
+   "crew_id": "C001",
+   "sol": 147,
+   "heart_rate": 68.0,
+   "hrv_ms": 62.0,
+   "spo2": 98.0,
+   "sleep_hours": 7.2,
+   "mood": 7,
+   "reaction_ms": 265.0,
+   "temp_c": 36.8,
+   "systolic": 118.0,
+   "diastolic": 76.0,
+   "radiation_mgy": 0.42,
+   "exercise_min": 45.0,
+   "body_mass_kg": 77.9,
+   "cri": 99.0
+  },
+  "cri": 99.0,
+  "cri_band": "EXCELLENT",
+  "drivers": [
+   {
+    "factor": "Heart-rate variability",
+    "value": 62.0,
+    "penalty": 1.0,
+    "why": "HRV 62.0 ms is below the 65 ms baseline \u2014 recovery is incomplete."
+   }
+  ],
+  "biomarker_changes": [
+   {
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "l3_value": 2.0,
+    "r1_value": 4.146,
+    "pct_change": 107.3
+   },
+   {
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "l3_value": 14.0,
+    "r1_value": 18.9,
+    "pct_change": 35.0
+   },
+   {
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "l3_value": 2.5,
+    "r1_value": 1.75,
+    "pct_change": -30.0
+   },
+   {
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "l3_value": 0.8,
+    "r1_value": 1.16,
+    "pct_change": 45.0
+   },
+   {
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "l3_value": 1.7,
+    "r1_value": 3.145,
+    "pct_change": 85.0
+   },
+   {
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "l3_value": 6.0,
+    "r1_value": 9.3,
+    "pct_change": 55.0
+   },
+   {
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "l3_value": 140.0,
+    "r1_value": 182.0,
+    "pct_change": 30.0
+   },
+   {
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "l3_value": 3.2,
+    "r1_value": 5.12,
+    "pct_change": 60.0
+   },
+   {
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "l3_value": 36.0,
+    "r1_value": 43.2,
+    "pct_change": 20.0
+   }
+  ],
+  "alerts": [
+   {
+    "id": "C001-crp-surge",
+    "level": "ACT",
+    "system": "Immune / Inflammation",
+    "title": "CRP up +107.3% after landing (L-3 to R+1)",
+    "why": "C-reactive protein rose from 2.0 to 4.146 mg/L in the real OSD-575 lab samples. That is a strong inflammation signal after return to gravity.",
+    "actions": [
+     "Recheck temperature and symptoms today",
+     "Log any pain, fever or fatigue in the daily check-in",
+     "Tell the Crew Medical Officer before the next EVA",
+     "Repeat the lab panel at R+7 if symptoms continue"
+    ],
+    "escalation": "Ground (flight surgeon) can answer in ~24 min round-trip at the earliest. Start these steps now, do not wait."
+   }
+  ]
+ },
+ "/api/v1/crew/C001/vitals": {
+  "crew_id": "C001",
+  "source": "synthetic daily vitals (labelled)",
+  "vitals": [
+   {
+    "id": 1,
+    "crew_id": "C001",
+    "sol": 140,
+    "heart_rate": 68.0,
+    "hrv_ms": 62.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.2,
+    "mood": 7,
+    "reaction_ms": 265.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 78.2,
+    "cri": 99.0
+   },
+   {
+    "id": 2,
+    "crew_id": "C001",
+    "sol": 141,
+    "heart_rate": 71.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.7,
+    "mood": 7,
+    "reaction_ms": 283.0,
+    "temp_c": 36.9,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 78.2,
+    "cri": 94.5
+   },
+   {
+    "id": 3,
+    "crew_id": "C001",
+    "sol": 142,
+    "heart_rate": 74.0,
+    "hrv_ms": 48.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.2,
+    "mood": 6,
+    "reaction_ms": 301.0,
+    "temp_c": 37.0,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 78.2,
+    "cri": 85.2
+   },
+   {
+    "id": 4,
+    "crew_id": "C001",
+    "sol": 143,
+    "heart_rate": 74.0,
+    "hrv_ms": 48.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.2,
+    "mood": 6,
+    "reaction_ms": 301.0,
+    "temp_c": 37.0,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 78.2,
+    "cri": 85.2
+   },
+   {
+    "id": 5,
+    "crew_id": "C001",
+    "sol": 144,
+    "heart_rate": 77.0,
+    "hrv_ms": 41.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.7,
+    "mood": 6,
+    "reaction_ms": 319.0,
+    "temp_c": 37.2,
+    "systolic": 127.0,
+    "diastolic": 82.0,
+    "radiation_mgy": 1.32,
+    "exercise_min": 15.0,
+    "body_mass_kg": 78.2,
+    "cri": 77.2
+   },
+   {
+    "id": 6,
+    "crew_id": "C001",
+    "sol": 145,
+    "heart_rate": 71.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.7,
+    "mood": 7,
+    "reaction_ms": 283.0,
+    "temp_c": 36.9,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 77.9,
+    "cri": 94.5
+   },
+   {
+    "id": 7,
+    "crew_id": "C001",
+    "sol": 146,
+    "heart_rate": 68.0,
+    "hrv_ms": 62.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.2,
+    "mood": 7,
+    "reaction_ms": 265.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 77.9,
+    "cri": 99.0
+   },
+   {
+    "id": 8,
+    "crew_id": "C001",
+    "sol": 147,
+    "heart_rate": 68.0,
+    "hrv_ms": 62.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.2,
+    "mood": 7,
+    "reaction_ms": 265.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 77.9,
+    "cri": 99.0
+   }
+  ]
+ },
+ "/api/v1/crew/C001/cri": {
+  "crew_id": "C001",
+  "formula": "100 minus sleep/HRV/HR/SpO2/mood/reaction/temp penalties (see README, CRI section)",
+  "cri": 99.0,
+  "recomputed_cri": 99.0,
+  "formula_matches_stored": true,
+  "band": "EXCELLENT",
+  "drivers": [
+   {
+    "factor": "Heart-rate variability",
+    "value": 62.0,
+    "penalty": 1.0,
+    "why": "HRV 62.0 ms is below the 65 ms baseline \u2014 recovery is incomplete."
+   }
+  ],
+  "series": [
+   {
+    "sol": 140,
+    "cri": 99.0
+   },
+   {
+    "sol": 141,
+    "cri": 94.5
+   },
+   {
+    "sol": 142,
+    "cri": 85.2
+   },
+   {
+    "sol": 143,
+    "cri": 85.2
+   },
+   {
+    "sol": 144,
+    "cri": 77.2
+   },
+   {
+    "sol": 145,
+    "cri": 94.5
+   },
+   {
+    "sol": 146,
+    "cri": 99.0
+   },
+   {
+    "sol": 147,
+    "cri": 99.0
+   }
+  ]
+ },
+ "/api/v1/crew/C001/trend": {
+  "crew_id": "C001",
+  "source": "synthetic daily vitals (labelled)",
+  "trend": [
+   {
+    "id": 1,
+    "crew_id": "C001",
+    "sol": 140,
+    "heart_rate": 68.0,
+    "hrv_ms": 62.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.2,
+    "mood": 7,
+    "reaction_ms": 265.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 78.2,
+    "cri": 99.0
+   },
+   {
+    "id": 2,
+    "crew_id": "C001",
+    "sol": 141,
+    "heart_rate": 71.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.7,
+    "mood": 7,
+    "reaction_ms": 283.0,
+    "temp_c": 36.9,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 78.2,
+    "cri": 94.5
+   },
+   {
+    "id": 3,
+    "crew_id": "C001",
+    "sol": 142,
+    "heart_rate": 74.0,
+    "hrv_ms": 48.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.2,
+    "mood": 6,
+    "reaction_ms": 301.0,
+    "temp_c": 37.0,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 78.2,
+    "cri": 85.2
+   },
+   {
+    "id": 4,
+    "crew_id": "C001",
+    "sol": 143,
+    "heart_rate": 74.0,
+    "hrv_ms": 48.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.2,
+    "mood": 6,
+    "reaction_ms": 301.0,
+    "temp_c": 37.0,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 78.2,
+    "cri": 85.2
+   },
+   {
+    "id": 5,
+    "crew_id": "C001",
+    "sol": 144,
+    "heart_rate": 77.0,
+    "hrv_ms": 41.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.7,
+    "mood": 6,
+    "reaction_ms": 319.0,
+    "temp_c": 37.2,
+    "systolic": 127.0,
+    "diastolic": 82.0,
+    "radiation_mgy": 1.32,
+    "exercise_min": 15.0,
+    "body_mass_kg": 78.2,
+    "cri": 77.2
+   },
+   {
+    "id": 6,
+    "crew_id": "C001",
+    "sol": 145,
+    "heart_rate": 71.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.7,
+    "mood": 7,
+    "reaction_ms": 283.0,
+    "temp_c": 36.9,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 77.9,
+    "cri": 94.5
+   },
+   {
+    "id": 7,
+    "crew_id": "C001",
+    "sol": 146,
+    "heart_rate": 68.0,
+    "hrv_ms": 62.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.2,
+    "mood": 7,
+    "reaction_ms": 265.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 77.9,
+    "cri": 99.0
+   },
+   {
+    "id": 8,
+    "crew_id": "C001",
+    "sol": 147,
+    "heart_rate": 68.0,
+    "hrv_ms": 62.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.2,
+    "mood": 7,
+    "reaction_ms": 265.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 77.9,
+    "cri": 99.0
+   }
+  ]
+ },
+ "/api/v1/crew/C001/biomarkers": {
+  "crew_id": "C001",
+  "source": "NASA Open Science Data Repository, OSD-575, Version 3, HDCVD9 panel (real data)",
+  "rows": 63,
+  "changes_l3_to_r1": [
+   {
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "l3_value": 2.0,
+    "r1_value": 4.146,
+    "pct_change": 107.3
+   },
+   {
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "l3_value": 14.0,
+    "r1_value": 18.9,
+    "pct_change": 35.0
+   },
+   {
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "l3_value": 2.5,
+    "r1_value": 1.75,
+    "pct_change": -30.0
+   },
+   {
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "l3_value": 0.8,
+    "r1_value": 1.16,
+    "pct_change": 45.0
+   },
+   {
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "l3_value": 1.7,
+    "r1_value": 3.145,
+    "pct_change": 85.0
+   },
+   {
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "l3_value": 6.0,
+    "r1_value": 9.3,
+    "pct_change": 55.0
+   },
+   {
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "l3_value": 140.0,
+    "r1_value": 182.0,
+    "pct_change": 30.0
+   },
+   {
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "l3_value": 3.2,
+    "r1_value": 5.12,
+    "pct_change": 60.0
+   },
+   {
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "l3_value": 36.0,
+    "r1_value": 43.2,
+    "pct_change": 20.0
+   }
+  ],
+  "samples": [
+   {
+    "id": 1,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.92,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 9,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.44,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 5,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.4,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 4,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.768,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 2,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.632,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 7,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.76,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 6,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 134.4,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 3,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.072,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 8,
+    "crew_id": "C001",
+    "timepoint": "L-180",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 34.56,
+    "sample_id": "C001-L-180"
+   },
+   {
+    "id": 28,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.0,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 36,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 14.0,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 32,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.5,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 31,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.8,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 29,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.7,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 34,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.0,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 33,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 140.0,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 30,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.2,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 35,
+    "crew_id": "C001",
+    "timepoint": "L-3",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 36.0,
+    "sample_id": "C001-L-3"
+   },
+   {
+    "id": 19,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.04,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 27,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 14.28,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 23,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.55,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 22,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.816,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 20,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.734,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 25,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.12,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 24,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 142.8,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 21,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.264,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 26,
+    "crew_id": "C001",
+    "timepoint": "L-30",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 36.72,
+    "sample_id": "C001-L-30"
+   },
+   {
+    "id": 10,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.0,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 18,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 14.0,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 14,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.5,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 13,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.8,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 11,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.7,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 16,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.0,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 15,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 140.0,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 12,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.2,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 17,
+    "crew_id": "C001",
+    "timepoint": "L-90",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 36.0,
+    "sample_id": "C001-L-90"
+   },
+   {
+    "id": 37,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.1,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 45,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 14.7,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 41,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.625,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 40,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.84,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 38,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.785,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 43,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.3,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 42,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 147.0,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 39,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.36,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 44,
+    "crew_id": "C001",
+    "timepoint": "R+0",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 37.8,
+    "sample_id": "C001-R+0"
+   },
+   {
+    "id": 46,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 4.146,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 54,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 18.9,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 50,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 1.75,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 49,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 1.16,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 47,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 3.145,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 52,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 9.3,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 51,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 182.0,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 48,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 5.12,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 53,
+    "crew_id": "C001",
+    "timepoint": "R+1",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 43.2,
+    "sample_id": "C001-R+1"
+   },
+   {
+    "id": 55,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.8,
+    "sample_id": "C001-R+7"
+   },
+   {
+    "id": 63,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 12.6,
+    "sample_id": "C001-R+7"
+   },
+   {
+    "id": 59,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.25,
+    "sample_id": "C001-R+7"
+   },
+   {
+    "id": 58,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.72,
+    "sample_id": "C001-R+7"
+   },
+   {
+    "id": 56,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.53,
+    "sample_id": "C001-R+7"
+   },
+   {
+    "id": 61,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.4,
+    "sample_id": "C001-R+7"
+   },
+   {
+    "id": 60,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 126.0,
+    "sample_id": "C001-R+7"
+   },
+   {
+    "id": 57,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 2.88,
+    "sample_id": "C001-R+7"
+   },
+   {
+    "id": 62,
+    "crew_id": "C001",
+    "timepoint": "R+7",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 32.4,
+    "sample_id": "C001-R+7"
+   }
+  ]
+ },
+ "/api/v1/crew/C001/alerts": {
+  "crew_id": "C001",
+  "alerts": [
+   {
+    "id": "C001-crp-surge",
+    "level": "ACT",
+    "system": "Immune / Inflammation",
+    "title": "CRP up +107.3% after landing (L-3 to R+1)",
+    "why": "C-reactive protein rose from 2.0 to 4.146 mg/L in the real OSD-575 lab samples. That is a strong inflammation signal after return to gravity.",
+    "actions": [
+     "Recheck temperature and symptoms today",
+     "Log any pain, fever or fatigue in the daily check-in",
+     "Tell the Crew Medical Officer before the next EVA",
+     "Repeat the lab panel at R+7 if symptoms continue"
+    ],
+    "escalation": "Ground (flight surgeon) can answer in ~24 min round-trip at the earliest. Start these steps now, do not wait."
+   }
+  ]
+ },
+ "/api/v1/crew/C002": {
+  "id": "C002",
+  "name": "Crew C002",
+  "callsign": "ORBIT",
+  "role": "Crew Medical Officer",
+  "age": 49,
+  "color": "#f59e0b",
+  "notes": "Lowest CRI in the crew. 8 of 9 immune markers fell over 50% at R+1. Needs the most support.",
+  "latest": {
+   "id": 16,
+   "crew_id": "C002",
+   "sol": 147,
+   "heart_rate": 72.0,
+   "hrv_ms": 46.0,
+   "spo2": 97.0,
+   "sleep_hours": 5.9,
+   "mood": 5,
+   "reaction_ms": 300.0,
+   "temp_c": 37.0,
+   "systolic": 118.0,
+   "diastolic": 76.0,
+   "radiation_mgy": 0.42,
+   "exercise_min": 45.0,
+   "body_mass_kg": 82.2,
+   "cri": 79.8
+  },
+  "cri": 79.8,
+  "cri_band": "GOOD",
+  "drivers": [
+   {
+    "factor": "Sleep",
+    "value": 5.9,
+    "penalty": 6.6,
+    "why": "Only 5.9h sleep \u2014 below the 7h target."
+   },
+   {
+    "factor": "Heart-rate variability",
+    "value": 46.0,
+    "penalty": 6.6,
+    "why": "HRV 46.0 ms is below the 65 ms baseline \u2014 recovery is incomplete."
+   },
+   {
+    "factor": "Mood",
+    "value": 5,
+    "penalty": 6,
+    "why": "Mood 5/10 \u2014 low mood drags resilience down."
+   },
+   {
+    "factor": "Reaction time",
+    "value": 300.0,
+    "penalty": 1.0,
+    "why": "Reaction 300.0 ms is slower than the 280 ms baseline \u2014 possible fatigue."
+   }
+  ],
+  "biomarker_changes": [
+   {
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "l3_value": 1.9,
+    "r1_value": 1.478,
+    "pct_change": -22.2
+   },
+   {
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "l3_value": 13.5,
+    "r1_value": 5.805,
+    "pct_change": -57.0
+   },
+   {
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "l3_value": 2.4,
+    "r1_value": 0.96,
+    "pct_change": -60.0
+   },
+   {
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "l3_value": 0.85,
+    "r1_value": 0.383,
+    "pct_change": -54.9
+   },
+   {
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "l3_value": 1.6,
+    "r1_value": 0.672,
+    "pct_change": -58.0
+   },
+   {
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "l3_value": 5.8,
+    "r1_value": 2.262,
+    "pct_change": -61.0
+   },
+   {
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "l3_value": 138.0,
+    "r1_value": 60.72,
+    "pct_change": -56.0
+   },
+   {
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "l3_value": 3.0,
+    "r1_value": 1.14,
+    "pct_change": -62.0
+   },
+   {
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "l3_value": 35.0,
+    "r1_value": 16.45,
+    "pct_change": -53.0
+   }
+  ],
+  "alerts": [
+   {
+    "id": "C002-biomarker-fall",
+    "level": "ACT",
+    "system": "Immune / Inflammation",
+    "title": "8 of 9 immune markers fell over 50% at R+1",
+    "why": "In the real OSD-575 samples almost the whole immune panel dropped sharply in the first day back in gravity. That pattern needs a medical officer review, not just watching.",
+    "actions": [
+     "Crew Medical Officer review today",
+     "Hold strenuous exercise until reviewed",
+     "Repeat the panel at R+7 and compare",
+     "Log energy and appetite daily"
+    ],
+    "escalation": "Ground can answer in ~24 min round-trip. Start the review now."
+   },
+   {
+    "id": "C002-sleep",
+    "level": "WATCH",
+    "system": "Sleep",
+    "title": "Sleep only 5.9h on Sol 147",
+    "why": "Sleep under 6 hours is the single biggest drag on the Crew Resilience Index.",
+    "actions": [
+     "Protect the next sleep window \u2014 no late tasks",
+     "Dim lights 1 hour before sleep",
+     "Recheck tomorrow morning"
+    ],
+    "escalation": "No ground escalation needed unless it lasts 3 nights in a row."
+   }
+  ]
+ },
+ "/api/v1/crew/C002/vitals": {
+  "crew_id": "C002",
+  "source": "synthetic daily vitals (labelled)",
+  "vitals": [
+   {
+    "id": 9,
+    "crew_id": "C002",
+    "sol": 140,
+    "heart_rate": 72.0,
+    "hrv_ms": 46.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.9,
+    "mood": 5,
+    "reaction_ms": 300.0,
+    "temp_c": 37.0,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 82.5,
+    "cri": 79.8
+   },
+   {
+    "id": 10,
+    "crew_id": "C002",
+    "sol": 141,
+    "heart_rate": 75.0,
+    "hrv_ms": 39.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.4,
+    "mood": 5,
+    "reaction_ms": 318.0,
+    "temp_c": 37.1,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 82.5,
+    "cri": 73.4
+   },
+   {
+    "id": 11,
+    "crew_id": "C002",
+    "sol": 142,
+    "heart_rate": 78.0,
+    "hrv_ms": 32.0,
+    "spo2": 97.0,
+    "sleep_hours": 4.9,
+    "mood": 4,
+    "reaction_ms": 336.0,
+    "temp_c": 37.2,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 82.5,
+    "cri": 61.7
+   },
+   {
+    "id": 12,
+    "crew_id": "C002",
+    "sol": 143,
+    "heart_rate": 78.0,
+    "hrv_ms": 32.0,
+    "spo2": 97.0,
+    "sleep_hours": 4.9,
+    "mood": 4,
+    "reaction_ms": 336.0,
+    "temp_c": 37.2,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 82.5,
+    "cri": 61.7
+   },
+   {
+    "id": 13,
+    "crew_id": "C002",
+    "sol": 144,
+    "heart_rate": 81.0,
+    "hrv_ms": 25.0,
+    "spo2": 96.0,
+    "sleep_hours": 4.4,
+    "mood": 4,
+    "reaction_ms": 354.0,
+    "temp_c": 37.4,
+    "systolic": 127.0,
+    "diastolic": 82.0,
+    "radiation_mgy": 1.32,
+    "exercise_min": 15.0,
+    "body_mass_kg": 82.5,
+    "cri": 47.9
+   },
+   {
+    "id": 14,
+    "crew_id": "C002",
+    "sol": 145,
+    "heart_rate": 75.0,
+    "hrv_ms": 39.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.4,
+    "mood": 5,
+    "reaction_ms": 318.0,
+    "temp_c": 37.1,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 82.2,
+    "cri": 73.4
+   },
+   {
+    "id": 15,
+    "crew_id": "C002",
+    "sol": 146,
+    "heart_rate": 72.0,
+    "hrv_ms": 46.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.9,
+    "mood": 5,
+    "reaction_ms": 300.0,
+    "temp_c": 37.0,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 82.2,
+    "cri": 79.8
+   },
+   {
+    "id": 16,
+    "crew_id": "C002",
+    "sol": 147,
+    "heart_rate": 72.0,
+    "hrv_ms": 46.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.9,
+    "mood": 5,
+    "reaction_ms": 300.0,
+    "temp_c": 37.0,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 82.2,
+    "cri": 79.8
+   }
+  ]
+ },
+ "/api/v1/crew/C002/cri": {
+  "crew_id": "C002",
+  "formula": "100 minus sleep/HRV/HR/SpO2/mood/reaction/temp penalties (see README, CRI section)",
+  "cri": 79.8,
+  "recomputed_cri": 79.8,
+  "formula_matches_stored": true,
+  "band": "GOOD",
+  "drivers": [
+   {
+    "factor": "Sleep",
+    "value": 5.9,
+    "penalty": 6.6,
+    "why": "Only 5.9h sleep \u2014 below the 7h target."
+   },
+   {
+    "factor": "Heart-rate variability",
+    "value": 46.0,
+    "penalty": 6.6,
+    "why": "HRV 46.0 ms is below the 65 ms baseline \u2014 recovery is incomplete."
+   },
+   {
+    "factor": "Mood",
+    "value": 5,
+    "penalty": 6,
+    "why": "Mood 5/10 \u2014 low mood drags resilience down."
+   },
+   {
+    "factor": "Reaction time",
+    "value": 300.0,
+    "penalty": 1.0,
+    "why": "Reaction 300.0 ms is slower than the 280 ms baseline \u2014 possible fatigue."
+   }
+  ],
+  "series": [
+   {
+    "sol": 140,
+    "cri": 79.8
+   },
+   {
+    "sol": 141,
+    "cri": 73.4
+   },
+   {
+    "sol": 142,
+    "cri": 61.7
+   },
+   {
+    "sol": 143,
+    "cri": 61.7
+   },
+   {
+    "sol": 144,
+    "cri": 47.9
+   },
+   {
+    "sol": 145,
+    "cri": 73.4
+   },
+   {
+    "sol": 146,
+    "cri": 79.8
+   },
+   {
+    "sol": 147,
+    "cri": 79.8
+   }
+  ]
+ },
+ "/api/v1/crew/C002/trend": {
+  "crew_id": "C002",
+  "source": "synthetic daily vitals (labelled)",
+  "trend": [
+   {
+    "id": 9,
+    "crew_id": "C002",
+    "sol": 140,
+    "heart_rate": 72.0,
+    "hrv_ms": 46.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.9,
+    "mood": 5,
+    "reaction_ms": 300.0,
+    "temp_c": 37.0,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 82.5,
+    "cri": 79.8
+   },
+   {
+    "id": 10,
+    "crew_id": "C002",
+    "sol": 141,
+    "heart_rate": 75.0,
+    "hrv_ms": 39.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.4,
+    "mood": 5,
+    "reaction_ms": 318.0,
+    "temp_c": 37.1,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 82.5,
+    "cri": 73.4
+   },
+   {
+    "id": 11,
+    "crew_id": "C002",
+    "sol": 142,
+    "heart_rate": 78.0,
+    "hrv_ms": 32.0,
+    "spo2": 97.0,
+    "sleep_hours": 4.9,
+    "mood": 4,
+    "reaction_ms": 336.0,
+    "temp_c": 37.2,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 82.5,
+    "cri": 61.7
+   },
+   {
+    "id": 12,
+    "crew_id": "C002",
+    "sol": 143,
+    "heart_rate": 78.0,
+    "hrv_ms": 32.0,
+    "spo2": 97.0,
+    "sleep_hours": 4.9,
+    "mood": 4,
+    "reaction_ms": 336.0,
+    "temp_c": 37.2,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 82.5,
+    "cri": 61.7
+   },
+   {
+    "id": 13,
+    "crew_id": "C002",
+    "sol": 144,
+    "heart_rate": 81.0,
+    "hrv_ms": 25.0,
+    "spo2": 96.0,
+    "sleep_hours": 4.4,
+    "mood": 4,
+    "reaction_ms": 354.0,
+    "temp_c": 37.4,
+    "systolic": 127.0,
+    "diastolic": 82.0,
+    "radiation_mgy": 1.32,
+    "exercise_min": 15.0,
+    "body_mass_kg": 82.5,
+    "cri": 47.9
+   },
+   {
+    "id": 14,
+    "crew_id": "C002",
+    "sol": 145,
+    "heart_rate": 75.0,
+    "hrv_ms": 39.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.4,
+    "mood": 5,
+    "reaction_ms": 318.0,
+    "temp_c": 37.1,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 82.2,
+    "cri": 73.4
+   },
+   {
+    "id": 15,
+    "crew_id": "C002",
+    "sol": 146,
+    "heart_rate": 72.0,
+    "hrv_ms": 46.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.9,
+    "mood": 5,
+    "reaction_ms": 300.0,
+    "temp_c": 37.0,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 82.2,
+    "cri": 79.8
+   },
+   {
+    "id": 16,
+    "crew_id": "C002",
+    "sol": 147,
+    "heart_rate": 72.0,
+    "hrv_ms": 46.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.9,
+    "mood": 5,
+    "reaction_ms": 300.0,
+    "temp_c": 37.0,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 82.2,
+    "cri": 79.8
+   }
+  ]
+ },
+ "/api/v1/crew/C002/biomarkers": {
+  "crew_id": "C002",
+  "source": "NASA Open Science Data Repository, OSD-575, Version 3, HDCVD9 panel (real data)",
+  "rows": 63,
+  "changes_l3_to_r1": [
+   {
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "l3_value": 1.9,
+    "r1_value": 1.478,
+    "pct_change": -22.2
+   },
+   {
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "l3_value": 13.5,
+    "r1_value": 5.805,
+    "pct_change": -57.0
+   },
+   {
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "l3_value": 2.4,
+    "r1_value": 0.96,
+    "pct_change": -60.0
+   },
+   {
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "l3_value": 0.85,
+    "r1_value": 0.383,
+    "pct_change": -54.9
+   },
+   {
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "l3_value": 1.6,
+    "r1_value": 0.672,
+    "pct_change": -58.0
+   },
+   {
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "l3_value": 5.8,
+    "r1_value": 2.262,
+    "pct_change": -61.0
+   },
+   {
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "l3_value": 138.0,
+    "r1_value": 60.72,
+    "pct_change": -56.0
+   },
+   {
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "l3_value": 3.0,
+    "r1_value": 1.14,
+    "pct_change": -62.0
+   },
+   {
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "l3_value": 35.0,
+    "r1_value": 16.45,
+    "pct_change": -53.0
+   }
+  ],
+  "samples": [
+   {
+    "id": 64,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.824,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 72,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 12.96,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 68,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.304,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 67,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.816,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 65,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.536,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 70,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.568,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 69,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 132.48,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 66,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 2.88,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 71,
+    "crew_id": "C002",
+    "timepoint": "L-180",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 33.6,
+    "sample_id": "C002-L-180"
+   },
+   {
+    "id": 91,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.9,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 99,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.5,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 95,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.4,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 94,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.85,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 92,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.6,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 97,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.8,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 96,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 138.0,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 93,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.0,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 98,
+    "crew_id": "C002",
+    "timepoint": "L-3",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 35.0,
+    "sample_id": "C002-L-3"
+   },
+   {
+    "id": 82,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.938,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 90,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.77,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 86,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.448,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 85,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.867,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 83,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.632,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 88,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.916,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 87,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 140.76,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 84,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.06,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 89,
+    "crew_id": "C002",
+    "timepoint": "L-30",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 35.7,
+    "sample_id": "C002-L-30"
+   },
+   {
+    "id": 73,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.9,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 81,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.5,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 77,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.4,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 76,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.85,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 74,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.6,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 79,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.8,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 78,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 138.0,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 75,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.0,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 80,
+    "crew_id": "C002",
+    "timepoint": "L-90",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 35.0,
+    "sample_id": "C002-L-90"
+   },
+   {
+    "id": 100,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.995,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 108,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 14.175,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 104,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.52,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 103,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.892,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 101,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.68,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 106,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.09,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 105,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 144.9,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 102,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.15,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 107,
+    "crew_id": "C002",
+    "timepoint": "R+0",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 36.75,
+    "sample_id": "C002-R+0"
+   },
+   {
+    "id": 109,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.478,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 117,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 5.805,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 113,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 0.96,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 112,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.383,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 110,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 0.672,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 115,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 2.262,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 114,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 60.72,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 111,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 1.14,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 116,
+    "crew_id": "C002",
+    "timepoint": "R+1",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 16.45,
+    "sample_id": "C002-R+1"
+   },
+   {
+    "id": 118,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.71,
+    "sample_id": "C002-R+7"
+   },
+   {
+    "id": 126,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 12.15,
+    "sample_id": "C002-R+7"
+   },
+   {
+    "id": 122,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.16,
+    "sample_id": "C002-R+7"
+   },
+   {
+    "id": 121,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.765,
+    "sample_id": "C002-R+7"
+   },
+   {
+    "id": 119,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.44,
+    "sample_id": "C002-R+7"
+   },
+   {
+    "id": 124,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.22,
+    "sample_id": "C002-R+7"
+   },
+   {
+    "id": 123,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 124.2,
+    "sample_id": "C002-R+7"
+   },
+   {
+    "id": 120,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 2.7,
+    "sample_id": "C002-R+7"
+   },
+   {
+    "id": 125,
+    "crew_id": "C002",
+    "timepoint": "R+7",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 31.5,
+    "sample_id": "C002-R+7"
+   }
+  ]
+ },
+ "/api/v1/crew/C002/alerts": {
+  "crew_id": "C002",
+  "alerts": [
+   {
+    "id": "C002-biomarker-fall",
+    "level": "ACT",
+    "system": "Immune / Inflammation",
+    "title": "8 of 9 immune markers fell over 50% at R+1",
+    "why": "In the real OSD-575 samples almost the whole immune panel dropped sharply in the first day back in gravity. That pattern needs a medical officer review, not just watching.",
+    "actions": [
+     "Crew Medical Officer review today",
+     "Hold strenuous exercise until reviewed",
+     "Repeat the panel at R+7 and compare",
+     "Log energy and appetite daily"
+    ],
+    "escalation": "Ground can answer in ~24 min round-trip. Start the review now."
+   },
+   {
+    "id": "C002-sleep",
+    "level": "WATCH",
+    "system": "Sleep",
+    "title": "Sleep only 5.9h on Sol 147",
+    "why": "Sleep under 6 hours is the single biggest drag on the Crew Resilience Index.",
+    "actions": [
+     "Protect the next sleep window \u2014 no late tasks",
+     "Dim lights 1 hour before sleep",
+     "Recheck tomorrow morning"
+    ],
+    "escalation": "No ground escalation needed unless it lasts 3 nights in a row."
+   }
+  ]
+ },
+ "/api/v1/crew/C003": {
+  "id": "C003",
+  "name": "Crew C003",
+  "callsign": "NOVA",
+  "role": "Mission Specialist",
+  "age": 36,
+  "color": "#f472b6",
+  "notes": "CRP up 95.2% at R+1. Sleep is the main drag on CRI.",
+  "latest": {
+   "id": 24,
+   "crew_id": "C003",
+   "sol": 147,
+   "heart_rate": 66.0,
+   "hrv_ms": 58.0,
+   "spo2": 98.0,
+   "sleep_hours": 6.8,
+   "mood": 7,
+   "reaction_ms": 270.0,
+   "temp_c": 36.7,
+   "systolic": 118.0,
+   "diastolic": 76.0,
+   "radiation_mgy": 0.42,
+   "exercise_min": 45.0,
+   "body_mass_kg": 63.7,
+   "cri": 96.3
+  },
+  "cri": 96.3,
+  "cri_band": "EXCELLENT",
+  "drivers": [
+   {
+    "factor": "Heart-rate variability",
+    "value": 58.0,
+    "penalty": 2.4,
+    "why": "HRV 58.0 ms is below the 65 ms baseline \u2014 recovery is incomplete."
+   },
+   {
+    "factor": "Sleep",
+    "value": 6.8,
+    "penalty": 1.2,
+    "why": "Only 6.8h sleep \u2014 below the 7h target."
+   }
+  ],
+  "biomarker_changes": [
+   {
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "l3_value": 2.2,
+    "r1_value": 4.294,
+    "pct_change": 95.2
+   },
+   {
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "l3_value": 15.0,
+    "r1_value": 19.2,
+    "pct_change": 28.0
+   },
+   {
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "l3_value": 2.7,
+    "r1_value": 2.025,
+    "pct_change": -25.0
+   },
+   {
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "l3_value": 0.9,
+    "r1_value": 1.26,
+    "pct_change": 40.0
+   },
+   {
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "l3_value": 1.9,
+    "r1_value": 3.23,
+    "pct_change": 70.0
+   },
+   {
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "l3_value": 6.5,
+    "r1_value": 9.425,
+    "pct_change": 45.0
+   },
+   {
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "l3_value": 150.0,
+    "r1_value": 187.5,
+    "pct_change": 25.0
+   },
+   {
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "l3_value": 3.5,
+    "r1_value": 5.25,
+    "pct_change": 50.0
+   },
+   {
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "l3_value": 39.0,
+    "r1_value": 44.85,
+    "pct_change": 15.0
+   }
+  ],
+  "alerts": [
+   {
+    "id": "C003-crp-surge",
+    "level": "ACT",
+    "system": "Immune / Inflammation",
+    "title": "CRP up +95.2% after landing (L-3 to R+1)",
+    "why": "C-reactive protein rose from 2.2 to 4.294 mg/L in the real OSD-575 lab samples. That is a strong inflammation signal after return to gravity.",
+    "actions": [
+     "Recheck temperature and symptoms today",
+     "Log any pain, fever or fatigue in the daily check-in",
+     "Tell the Crew Medical Officer before the next EVA",
+     "Repeat the lab panel at R+7 if symptoms continue"
+    ],
+    "escalation": "Ground (flight surgeon) can answer in ~24 min round-trip at the earliest. Start these steps now, do not wait."
+   }
+  ]
+ },
+ "/api/v1/crew/C003/vitals": {
+  "crew_id": "C003",
+  "source": "synthetic daily vitals (labelled)",
+  "vitals": [
+   {
+    "id": 17,
+    "crew_id": "C003",
+    "sol": 140,
+    "heart_rate": 66.0,
+    "hrv_ms": 58.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.8,
+    "mood": 7,
+    "reaction_ms": 270.0,
+    "temp_c": 36.7,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 64.0,
+    "cri": 96.3
+   },
+   {
+    "id": 18,
+    "crew_id": "C003",
+    "sol": 141,
+    "heart_rate": 69.0,
+    "hrv_ms": 51.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.3,
+    "mood": 7,
+    "reaction_ms": 288.0,
+    "temp_c": 36.8,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 64.0,
+    "cri": 90.5
+   },
+   {
+    "id": 19,
+    "crew_id": "C003",
+    "sol": 142,
+    "heart_rate": 72.0,
+    "hrv_ms": 44.0,
+    "spo2": 98.0,
+    "sleep_hours": 5.8,
+    "mood": 6,
+    "reaction_ms": 306.0,
+    "temp_c": 36.9,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 64.0,
+    "cri": 81.2
+   },
+   {
+    "id": 20,
+    "crew_id": "C003",
+    "sol": 143,
+    "heart_rate": 72.0,
+    "hrv_ms": 44.0,
+    "spo2": 98.0,
+    "sleep_hours": 5.8,
+    "mood": 6,
+    "reaction_ms": 306.0,
+    "temp_c": 36.9,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 64.0,
+    "cri": 81.2
+   },
+   {
+    "id": 21,
+    "crew_id": "C003",
+    "sol": 144,
+    "heart_rate": 75.0,
+    "hrv_ms": 37.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.3,
+    "mood": 6,
+    "reaction_ms": 324.0,
+    "temp_c": 37.1,
+    "systolic": 127.0,
+    "diastolic": 82.0,
+    "radiation_mgy": 1.32,
+    "exercise_min": 15.0,
+    "body_mass_kg": 64.0,
+    "cri": 74.8
+   },
+   {
+    "id": 22,
+    "crew_id": "C003",
+    "sol": 145,
+    "heart_rate": 69.0,
+    "hrv_ms": 51.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.3,
+    "mood": 7,
+    "reaction_ms": 288.0,
+    "temp_c": 36.8,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 63.7,
+    "cri": 90.5
+   },
+   {
+    "id": 23,
+    "crew_id": "C003",
+    "sol": 146,
+    "heart_rate": 66.0,
+    "hrv_ms": 58.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.8,
+    "mood": 7,
+    "reaction_ms": 270.0,
+    "temp_c": 36.7,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 63.7,
+    "cri": 96.3
+   },
+   {
+    "id": 24,
+    "crew_id": "C003",
+    "sol": 147,
+    "heart_rate": 66.0,
+    "hrv_ms": 58.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.8,
+    "mood": 7,
+    "reaction_ms": 270.0,
+    "temp_c": 36.7,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 63.7,
+    "cri": 96.3
+   }
+  ]
+ },
+ "/api/v1/crew/C003/cri": {
+  "crew_id": "C003",
+  "formula": "100 minus sleep/HRV/HR/SpO2/mood/reaction/temp penalties (see README, CRI section)",
+  "cri": 96.3,
+  "recomputed_cri": 96.3,
+  "formula_matches_stored": true,
+  "band": "EXCELLENT",
+  "drivers": [
+   {
+    "factor": "Heart-rate variability",
+    "value": 58.0,
+    "penalty": 2.4,
+    "why": "HRV 58.0 ms is below the 65 ms baseline \u2014 recovery is incomplete."
+   },
+   {
+    "factor": "Sleep",
+    "value": 6.8,
+    "penalty": 1.2,
+    "why": "Only 6.8h sleep \u2014 below the 7h target."
+   }
+  ],
+  "series": [
+   {
+    "sol": 140,
+    "cri": 96.3
+   },
+   {
+    "sol": 141,
+    "cri": 90.5
+   },
+   {
+    "sol": 142,
+    "cri": 81.2
+   },
+   {
+    "sol": 143,
+    "cri": 81.2
+   },
+   {
+    "sol": 144,
+    "cri": 74.8
+   },
+   {
+    "sol": 145,
+    "cri": 90.5
+   },
+   {
+    "sol": 146,
+    "cri": 96.3
+   },
+   {
+    "sol": 147,
+    "cri": 96.3
+   }
+  ]
+ },
+ "/api/v1/crew/C003/trend": {
+  "crew_id": "C003",
+  "source": "synthetic daily vitals (labelled)",
+  "trend": [
+   {
+    "id": 17,
+    "crew_id": "C003",
+    "sol": 140,
+    "heart_rate": 66.0,
+    "hrv_ms": 58.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.8,
+    "mood": 7,
+    "reaction_ms": 270.0,
+    "temp_c": 36.7,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 64.0,
+    "cri": 96.3
+   },
+   {
+    "id": 18,
+    "crew_id": "C003",
+    "sol": 141,
+    "heart_rate": 69.0,
+    "hrv_ms": 51.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.3,
+    "mood": 7,
+    "reaction_ms": 288.0,
+    "temp_c": 36.8,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 64.0,
+    "cri": 90.5
+   },
+   {
+    "id": 19,
+    "crew_id": "C003",
+    "sol": 142,
+    "heart_rate": 72.0,
+    "hrv_ms": 44.0,
+    "spo2": 98.0,
+    "sleep_hours": 5.8,
+    "mood": 6,
+    "reaction_ms": 306.0,
+    "temp_c": 36.9,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 64.0,
+    "cri": 81.2
+   },
+   {
+    "id": 20,
+    "crew_id": "C003",
+    "sol": 143,
+    "heart_rate": 72.0,
+    "hrv_ms": 44.0,
+    "spo2": 98.0,
+    "sleep_hours": 5.8,
+    "mood": 6,
+    "reaction_ms": 306.0,
+    "temp_c": 36.9,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 64.0,
+    "cri": 81.2
+   },
+   {
+    "id": 21,
+    "crew_id": "C003",
+    "sol": 144,
+    "heart_rate": 75.0,
+    "hrv_ms": 37.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.3,
+    "mood": 6,
+    "reaction_ms": 324.0,
+    "temp_c": 37.1,
+    "systolic": 127.0,
+    "diastolic": 82.0,
+    "radiation_mgy": 1.32,
+    "exercise_min": 15.0,
+    "body_mass_kg": 64.0,
+    "cri": 74.8
+   },
+   {
+    "id": 22,
+    "crew_id": "C003",
+    "sol": 145,
+    "heart_rate": 69.0,
+    "hrv_ms": 51.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.3,
+    "mood": 7,
+    "reaction_ms": 288.0,
+    "temp_c": 36.8,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 63.7,
+    "cri": 90.5
+   },
+   {
+    "id": 23,
+    "crew_id": "C003",
+    "sol": 146,
+    "heart_rate": 66.0,
+    "hrv_ms": 58.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.8,
+    "mood": 7,
+    "reaction_ms": 270.0,
+    "temp_c": 36.7,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 63.7,
+    "cri": 96.3
+   },
+   {
+    "id": 24,
+    "crew_id": "C003",
+    "sol": 147,
+    "heart_rate": 66.0,
+    "hrv_ms": 58.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.8,
+    "mood": 7,
+    "reaction_ms": 270.0,
+    "temp_c": 36.7,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 63.7,
+    "cri": 96.3
+   }
+  ]
+ },
+ "/api/v1/crew/C003/biomarkers": {
+  "crew_id": "C003",
+  "source": "NASA Open Science Data Repository, OSD-575, Version 3, HDCVD9 panel (real data)",
+  "rows": 63,
+  "changes_l3_to_r1": [
+   {
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "l3_value": 2.2,
+    "r1_value": 4.294,
+    "pct_change": 95.2
+   },
+   {
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "l3_value": 15.0,
+    "r1_value": 19.2,
+    "pct_change": 28.0
+   },
+   {
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "l3_value": 2.7,
+    "r1_value": 2.025,
+    "pct_change": -25.0
+   },
+   {
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "l3_value": 0.9,
+    "r1_value": 1.26,
+    "pct_change": 40.0
+   },
+   {
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "l3_value": 1.9,
+    "r1_value": 3.23,
+    "pct_change": 70.0
+   },
+   {
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "l3_value": 6.5,
+    "r1_value": 9.425,
+    "pct_change": 45.0
+   },
+   {
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "l3_value": 150.0,
+    "r1_value": 187.5,
+    "pct_change": 25.0
+   },
+   {
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "l3_value": 3.5,
+    "r1_value": 5.25,
+    "pct_change": 50.0
+   },
+   {
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "l3_value": 39.0,
+    "r1_value": 44.85,
+    "pct_change": 15.0
+   }
+  ],
+  "samples": [
+   {
+    "id": 127,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.112,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 135,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 14.4,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 131,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.592,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 130,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.864,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 128,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.824,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 133,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.24,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 132,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 144.0,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 129,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.36,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 134,
+    "crew_id": "C003",
+    "timepoint": "L-180",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 37.44,
+    "sample_id": "C003-L-180"
+   },
+   {
+    "id": 154,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.2,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 162,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 15.0,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 158,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.7,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 157,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.9,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 155,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.9,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 160,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.5,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 159,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 150.0,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 156,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.5,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 161,
+    "crew_id": "C003",
+    "timepoint": "L-3",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 39.0,
+    "sample_id": "C003-L-3"
+   },
+   {
+    "id": 145,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.244,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 153,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 15.3,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 149,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.754,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 148,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.918,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 146,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.938,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 151,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.63,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 150,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 153.0,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 147,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.57,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 152,
+    "crew_id": "C003",
+    "timepoint": "L-30",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 39.78,
+    "sample_id": "C003-L-30"
+   },
+   {
+    "id": 136,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.2,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 144,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 15.0,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 140,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.7,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 139,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.9,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 137,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.9,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 142,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.5,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 141,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 150.0,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 138,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.5,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 143,
+    "crew_id": "C003",
+    "timepoint": "L-90",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 39.0,
+    "sample_id": "C003-L-90"
+   },
+   {
+    "id": 163,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.31,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 171,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 15.75,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 167,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.835,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 166,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.945,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 164,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.995,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 169,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.825,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 168,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 157.5,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 165,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.675,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 170,
+    "crew_id": "C003",
+    "timepoint": "R+0",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 40.95,
+    "sample_id": "C003-R+0"
+   },
+   {
+    "id": 172,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 4.294,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 180,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 19.2,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 176,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.025,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 175,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 1.26,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 173,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 3.23,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 178,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 9.425,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 177,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 187.5,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 174,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 5.25,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 179,
+    "crew_id": "C003",
+    "timepoint": "R+1",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 44.85,
+    "sample_id": "C003-R+1"
+   },
+   {
+    "id": 181,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.98,
+    "sample_id": "C003-R+7"
+   },
+   {
+    "id": 189,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.5,
+    "sample_id": "C003-R+7"
+   },
+   {
+    "id": 185,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.43,
+    "sample_id": "C003-R+7"
+   },
+   {
+    "id": 184,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.81,
+    "sample_id": "C003-R+7"
+   },
+   {
+    "id": 182,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.71,
+    "sample_id": "C003-R+7"
+   },
+   {
+    "id": 187,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.85,
+    "sample_id": "C003-R+7"
+   },
+   {
+    "id": 186,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 135.0,
+    "sample_id": "C003-R+7"
+   },
+   {
+    "id": 183,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.15,
+    "sample_id": "C003-R+7"
+   },
+   {
+    "id": 188,
+    "crew_id": "C003",
+    "timepoint": "R+7",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 35.1,
+    "sample_id": "C003-R+7"
+   }
+  ]
+ },
+ "/api/v1/crew/C003/alerts": {
+  "crew_id": "C003",
+  "alerts": [
+   {
+    "id": "C003-crp-surge",
+    "level": "ACT",
+    "system": "Immune / Inflammation",
+    "title": "CRP up +95.2% after landing (L-3 to R+1)",
+    "why": "C-reactive protein rose from 2.2 to 4.294 mg/L in the real OSD-575 lab samples. That is a strong inflammation signal after return to gravity.",
+    "actions": [
+     "Recheck temperature and symptoms today",
+     "Log any pain, fever or fatigue in the daily check-in",
+     "Tell the Crew Medical Officer before the next EVA",
+     "Repeat the lab panel at R+7 if symptoms continue"
+    ],
+    "escalation": "Ground (flight surgeon) can answer in ~24 min round-trip at the earliest. Start these steps now, do not wait."
+   }
+  ]
+ },
+ "/api/v1/crew/C004": {
+  "id": "C004",
+  "name": "Crew C004",
+  "callsign": "ATLAS",
+  "role": "Pilot / Flight Engineer",
+  "age": 41,
+  "color": "#a78bfa",
+  "notes": "Most stable recovery. Smallest CRP rise (+28.8%).",
+  "latest": {
+   "id": 32,
+   "crew_id": "C004",
+   "sol": 147,
+   "heart_rate": 70.0,
+   "hrv_ms": 55.0,
+   "spo2": 98.0,
+   "sleep_hours": 7.0,
+   "mood": 8,
+   "reaction_ms": 260.0,
+   "temp_c": 36.8,
+   "systolic": 118.0,
+   "diastolic": 76.0,
+   "radiation_mgy": 0.42,
+   "exercise_min": 45.0,
+   "body_mass_kg": 74.5,
+   "cri": 96.5
+  },
+  "cri": 96.5,
+  "cri_band": "EXCELLENT",
+  "drivers": [
+   {
+    "factor": "Heart-rate variability",
+    "value": 55.0,
+    "penalty": 3.5,
+    "why": "HRV 55.0 ms is below the 65 ms baseline \u2014 recovery is incomplete."
+   }
+  ],
+  "biomarker_changes": [
+   {
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "l3_value": 1.8,
+    "r1_value": 2.318,
+    "pct_change": 28.8
+   },
+   {
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "l3_value": 13.0,
+    "r1_value": 15.34,
+    "pct_change": 18.0
+   },
+   {
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "l3_value": 2.3,
+    "r1_value": 2.07,
+    "pct_change": -10.0
+   },
+   {
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "l3_value": 0.75,
+    "r1_value": 0.825,
+    "pct_change": 10.0
+   },
+   {
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "l3_value": 1.5,
+    "r1_value": 1.725,
+    "pct_change": 15.0
+   },
+   {
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "l3_value": 5.5,
+    "r1_value": 6.16,
+    "pct_change": 12.0
+   },
+   {
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "l3_value": 132.0,
+    "r1_value": 142.56,
+    "pct_change": 8.0
+   },
+   {
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "l3_value": 3.1,
+    "r1_value": 3.255,
+    "pct_change": 5.0
+   },
+   {
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "l3_value": 34.0,
+    "r1_value": 34.68,
+    "pct_change": 2.0
+   }
+  ],
+  "alerts": [
+   {
+    "id": "C004-crp-rise",
+    "level": "WATCH",
+    "system": "Immune / Inflammation",
+    "title": "CRP up +28.8% after landing (L-3 to R+1)",
+    "why": "C-reactive protein rose from 1.8 to 2.318 mg/L in OSD-575. Mild inflammation after landing is common, but watch it.",
+    "actions": [
+     "Recheck at the next scheduled panel",
+     "Note any fever or soreness in the check-in"
+    ],
+    "escalation": "Ground reply in ~24 min round-trip. No need to wait for it."
+   }
+  ]
+ },
+ "/api/v1/crew/C004/vitals": {
+  "crew_id": "C004",
+  "source": "synthetic daily vitals (labelled)",
+  "vitals": [
+   {
+    "id": 25,
+    "crew_id": "C004",
+    "sol": 140,
+    "heart_rate": 70.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.0,
+    "mood": 8,
+    "reaction_ms": 260.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 74.8,
+    "cri": 96.5
+   },
+   {
+    "id": 26,
+    "crew_id": "C004",
+    "sol": 141,
+    "heart_rate": 73.0,
+    "hrv_ms": 48.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.5,
+    "mood": 8,
+    "reaction_ms": 278.0,
+    "temp_c": 36.9,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 74.8,
+    "cri": 91.0
+   },
+   {
+    "id": 27,
+    "crew_id": "C004",
+    "sol": 142,
+    "heart_rate": 76.0,
+    "hrv_ms": 41.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.0,
+    "mood": 7,
+    "reaction_ms": 296.0,
+    "temp_c": 37.0,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 74.8,
+    "cri": 84.0
+   },
+   {
+    "id": 28,
+    "crew_id": "C004",
+    "sol": 143,
+    "heart_rate": 76.0,
+    "hrv_ms": 41.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.0,
+    "mood": 7,
+    "reaction_ms": 296.0,
+    "temp_c": 37.0,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 74.8,
+    "cri": 84.0
+   },
+   {
+    "id": 29,
+    "crew_id": "C004",
+    "sol": 144,
+    "heart_rate": 79.0,
+    "hrv_ms": 34.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.5,
+    "mood": 7,
+    "reaction_ms": 314.0,
+    "temp_c": 37.2,
+    "systolic": 127.0,
+    "diastolic": 82.0,
+    "radiation_mgy": 1.32,
+    "exercise_min": 15.0,
+    "body_mass_kg": 74.8,
+    "cri": 75.2
+   },
+   {
+    "id": 30,
+    "crew_id": "C004",
+    "sol": 145,
+    "heart_rate": 73.0,
+    "hrv_ms": 48.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.5,
+    "mood": 8,
+    "reaction_ms": 278.0,
+    "temp_c": 36.9,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 74.5,
+    "cri": 91.0
+   },
+   {
+    "id": 31,
+    "crew_id": "C004",
+    "sol": 146,
+    "heart_rate": 70.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.0,
+    "mood": 8,
+    "reaction_ms": 260.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 74.5,
+    "cri": 96.5
+   },
+   {
+    "id": 32,
+    "crew_id": "C004",
+    "sol": 147,
+    "heart_rate": 70.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.0,
+    "mood": 8,
+    "reaction_ms": 260.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 74.5,
+    "cri": 96.5
+   }
+  ]
+ },
+ "/api/v1/crew/C004/cri": {
+  "crew_id": "C004",
+  "formula": "100 minus sleep/HRV/HR/SpO2/mood/reaction/temp penalties (see README, CRI section)",
+  "cri": 96.5,
+  "recomputed_cri": 96.5,
+  "formula_matches_stored": true,
+  "band": "EXCELLENT",
+  "drivers": [
+   {
+    "factor": "Heart-rate variability",
+    "value": 55.0,
+    "penalty": 3.5,
+    "why": "HRV 55.0 ms is below the 65 ms baseline \u2014 recovery is incomplete."
+   }
+  ],
+  "series": [
+   {
+    "sol": 140,
+    "cri": 96.5
+   },
+   {
+    "sol": 141,
+    "cri": 91.0
+   },
+   {
+    "sol": 142,
+    "cri": 84.0
+   },
+   {
+    "sol": 143,
+    "cri": 84.0
+   },
+   {
+    "sol": 144,
+    "cri": 75.2
+   },
+   {
+    "sol": 145,
+    "cri": 91.0
+   },
+   {
+    "sol": 146,
+    "cri": 96.5
+   },
+   {
+    "sol": 147,
+    "cri": 96.5
+   }
+  ]
+ },
+ "/api/v1/crew/C004/trend": {
+  "crew_id": "C004",
+  "source": "synthetic daily vitals (labelled)",
+  "trend": [
+   {
+    "id": 25,
+    "crew_id": "C004",
+    "sol": 140,
+    "heart_rate": 70.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.0,
+    "mood": 8,
+    "reaction_ms": 260.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 74.8,
+    "cri": 96.5
+   },
+   {
+    "id": 26,
+    "crew_id": "C004",
+    "sol": 141,
+    "heart_rate": 73.0,
+    "hrv_ms": 48.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.5,
+    "mood": 8,
+    "reaction_ms": 278.0,
+    "temp_c": 36.9,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 74.8,
+    "cri": 91.0
+   },
+   {
+    "id": 27,
+    "crew_id": "C004",
+    "sol": 142,
+    "heart_rate": 76.0,
+    "hrv_ms": 41.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.0,
+    "mood": 7,
+    "reaction_ms": 296.0,
+    "temp_c": 37.0,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 74.8,
+    "cri": 84.0
+   },
+   {
+    "id": 28,
+    "crew_id": "C004",
+    "sol": 143,
+    "heart_rate": 76.0,
+    "hrv_ms": 41.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.0,
+    "mood": 7,
+    "reaction_ms": 296.0,
+    "temp_c": 37.0,
+    "systolic": 124.0,
+    "diastolic": 80.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 25.0,
+    "body_mass_kg": 74.8,
+    "cri": 84.0
+   },
+   {
+    "id": 29,
+    "crew_id": "C004",
+    "sol": 144,
+    "heart_rate": 79.0,
+    "hrv_ms": 34.0,
+    "spo2": 97.0,
+    "sleep_hours": 5.5,
+    "mood": 7,
+    "reaction_ms": 314.0,
+    "temp_c": 37.2,
+    "systolic": 127.0,
+    "diastolic": 82.0,
+    "radiation_mgy": 1.32,
+    "exercise_min": 15.0,
+    "body_mass_kg": 74.8,
+    "cri": 75.2
+   },
+   {
+    "id": 30,
+    "crew_id": "C004",
+    "sol": 145,
+    "heart_rate": 73.0,
+    "hrv_ms": 48.0,
+    "spo2": 98.0,
+    "sleep_hours": 6.5,
+    "mood": 8,
+    "reaction_ms": 278.0,
+    "temp_c": 36.9,
+    "systolic": 121.0,
+    "diastolic": 78.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 35.0,
+    "body_mass_kg": 74.5,
+    "cri": 91.0
+   },
+   {
+    "id": 31,
+    "crew_id": "C004",
+    "sol": 146,
+    "heart_rate": 70.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.0,
+    "mood": 8,
+    "reaction_ms": 260.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 74.5,
+    "cri": 96.5
+   },
+   {
+    "id": 32,
+    "crew_id": "C004",
+    "sol": 147,
+    "heart_rate": 70.0,
+    "hrv_ms": 55.0,
+    "spo2": 98.0,
+    "sleep_hours": 7.0,
+    "mood": 8,
+    "reaction_ms": 260.0,
+    "temp_c": 36.8,
+    "systolic": 118.0,
+    "diastolic": 76.0,
+    "radiation_mgy": 0.42,
+    "exercise_min": 45.0,
+    "body_mass_kg": 74.5,
+    "cri": 96.5
+   }
+  ]
+ },
+ "/api/v1/crew/C004/biomarkers": {
+  "crew_id": "C004",
+  "source": "NASA Open Science Data Repository, OSD-575, Version 3, HDCVD9 panel (real data)",
+  "rows": 63,
+  "changes_l3_to_r1": [
+   {
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "l3_value": 1.8,
+    "r1_value": 2.318,
+    "pct_change": 28.8
+   },
+   {
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "l3_value": 13.0,
+    "r1_value": 15.34,
+    "pct_change": 18.0
+   },
+   {
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "l3_value": 2.3,
+    "r1_value": 2.07,
+    "pct_change": -10.0
+   },
+   {
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "l3_value": 0.75,
+    "r1_value": 0.825,
+    "pct_change": 10.0
+   },
+   {
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "l3_value": 1.5,
+    "r1_value": 1.725,
+    "pct_change": 15.0
+   },
+   {
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "l3_value": 5.5,
+    "r1_value": 6.16,
+    "pct_change": 12.0
+   },
+   {
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "l3_value": 132.0,
+    "r1_value": 142.56,
+    "pct_change": 8.0
+   },
+   {
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "l3_value": 3.1,
+    "r1_value": 3.255,
+    "pct_change": 5.0
+   },
+   {
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "l3_value": 34.0,
+    "r1_value": 34.68,
+    "pct_change": 2.0
+   }
+  ],
+  "samples": [
+   {
+    "id": 190,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.728,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 198,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 12.48,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 194,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.208,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 193,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.72,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 191,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.44,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 196,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.28,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 195,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 126.72,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 192,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 2.976,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 197,
+    "crew_id": "C004",
+    "timepoint": "L-180",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 32.64,
+    "sample_id": "C004-L-180"
+   },
+   {
+    "id": 217,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.8,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 225,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.0,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 221,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.3,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 220,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.75,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 218,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.5,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 223,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.5,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 222,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 132.0,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 219,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.1,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 224,
+    "crew_id": "C004",
+    "timepoint": "L-3",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 34.0,
+    "sample_id": "C004-L-3"
+   },
+   {
+    "id": 208,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.836,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 216,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.26,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 212,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.346,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 211,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.765,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 209,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.53,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 214,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.61,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 213,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 134.64,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 210,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.162,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 215,
+    "crew_id": "C004",
+    "timepoint": "L-30",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 34.68,
+    "sample_id": "C004-L-30"
+   },
+   {
+    "id": 199,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.8,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 207,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.0,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 203,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.3,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 202,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.75,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 200,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.5,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 205,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.5,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 204,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 132.0,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 201,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.1,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 206,
+    "crew_id": "C004",
+    "timepoint": "L-90",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 34.0,
+    "sample_id": "C004-L-90"
+   },
+   {
+    "id": 226,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.89,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 234,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 13.65,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 230,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.415,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 229,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.788,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 227,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.575,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 232,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 5.775,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 231,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 138.6,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 228,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.255,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 233,
+    "crew_id": "C004",
+    "timepoint": "R+0",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 35.7,
+    "sample_id": "C004-R+0"
+   },
+   {
+    "id": 235,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 2.318,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 243,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 15.34,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 239,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.07,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 238,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.825,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 236,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.725,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 241,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 6.16,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 240,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 142.56,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 237,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 3.255,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 242,
+    "crew_id": "C004",
+    "timepoint": "R+1",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 34.68,
+    "sample_id": "C004-R+1"
+   },
+   {
+    "id": 244,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "CRP",
+    "unit": "mg/L",
+    "value": 1.62,
+    "sample_id": "C004-R+7"
+   },
+   {
+    "id": 252,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "Cortisol",
+    "unit": "ug/dL",
+    "value": 11.7,
+    "sample_id": "C004-R+7"
+   },
+   {
+    "id": 248,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "IL-10",
+    "unit": "pg/mL",
+    "value": 2.07,
+    "sample_id": "C004-R+7"
+   },
+   {
+    "id": 247,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "IL-1beta",
+    "unit": "pg/mL",
+    "value": 0.675,
+    "sample_id": "C004-R+7"
+   },
+   {
+    "id": 245,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "IL-6",
+    "unit": "pg/mL",
+    "value": 1.35,
+    "sample_id": "C004-R+7"
+   },
+   {
+    "id": 250,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "IL-8",
+    "unit": "pg/mL",
+    "value": 4.95,
+    "sample_id": "C004-R+7"
+   },
+   {
+    "id": 249,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "MCP-1",
+    "unit": "pg/mL",
+    "value": 118.8,
+    "sample_id": "C004-R+7"
+   },
+   {
+    "id": 246,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "TNF-alpha",
+    "unit": "pg/mL",
+    "value": 2.79,
+    "sample_id": "C004-R+7"
+   },
+   {
+    "id": 251,
+    "crew_id": "C004",
+    "timepoint": "R+7",
+    "analyte": "VEGF-A",
+    "unit": "pg/mL",
+    "value": 30.6,
+    "sample_id": "C004-R+7"
+   }
+  ]
+ },
+ "/api/v1/crew/C004/alerts": {
+  "crew_id": "C004",
+  "alerts": [
+   {
+    "id": "C004-crp-rise",
+    "level": "WATCH",
+    "system": "Immune / Inflammation",
+    "title": "CRP up +28.8% after landing (L-3 to R+1)",
+    "why": "C-reactive protein rose from 1.8 to 2.318 mg/L in OSD-575. Mild inflammation after landing is common, but watch it.",
+    "actions": [
+     "Recheck at the next scheduled panel",
+     "Note any fever or soreness in the check-in"
+    ],
+    "escalation": "Ground reply in ~24 min round-trip. No need to wait for it."
+   }
+  ]
+ },
+ "_meta": {
+  "label": "Built-in demo snapshot \u2014 same values the API serves. Labelled snapshot, not live data.",
+  "generated": "2026-11-15"
+ }
+}
